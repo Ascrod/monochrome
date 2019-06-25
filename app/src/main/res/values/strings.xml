@@ -92,6 +92,11 @@
     <string name="setting_summary_search_engine_startpage_de">StartPage (de)</string>
     <string name="setting_summary_search_engine_searx">Searx</string>
 
+    <string name="setting_title_user_agent">User Agent</string>
+    <string name="setting_summary_user_agent">Switch between mobile and desktop user agents, or enter a custom one.</string>
+    <string name="setting_summary_user_agent_default">Default</string>
+    <string name="setting_summary_user_agent_desktop">Desktop</string>
+
     <string name="setting_title_inverted">Inverted colors</string>
     <string name="setting_summary_inverted">If checked, content will be rendered in a inverted grey scale mode. This
     is a kind of \"night mode\".</string>

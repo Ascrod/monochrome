@@ -70,6 +70,8 @@ public class BrowserUnit {
     private static final String SEARCH_ENGINE_STARTPAGE_DE = "https://startpage.com/do/search?lui=deu&language=deutsch&query=";
     private static final String SEARCH_ENGINE_SEARX = "https://searx.me/?q=";
 
+    public static final String UA_DESKTOP_SYSTEM = "(Windows NT 10.0; Win64; x64)";
+
     public static final String URL_ENCODING = "UTF-8";
     private static final String URL_ABOUT_BLANK = "about:blank";
     public static final String URL_SCHEME_ABOUT = "about:";

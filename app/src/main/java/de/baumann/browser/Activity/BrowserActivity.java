@@ -2029,6 +2029,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         CheckBox sw_location = dialogView.findViewById(R.id.switch_location);
         CheckBox sw_invert = dialogView.findViewById(R.id.switch_invert);
         CheckBox sw_history = dialogView.findViewById(R.id.switch_history);
+        CheckBox sw_desktop = dialogView.findViewById(R.id.switch_desktop);
 
         javaHosts = new Javascript(BrowserActivity.this);
         javaHosts = getJavaHosts();
@@ -2244,6 +2245,23 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 }else{
                     sp.edit().putBoolean("sp_invert", false).commit();
                     initRendering(contentFrame);
+                }
+            }
+        });
+
+        if ((sp.getString(getString(R.string.sp_user_agent), "0").equals("1"))){
+            sw_desktop.setChecked(true);
+        } else {
+            sw_desktop.setChecked(false);
+        }
+
+        sw_desktop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    sp.edit().putString(getString(R.string.sp_user_agent), "1").commit();
+                }else{
+                    sp.edit().putString(getString(R.string.sp_user_agent), "0").commit();
                 }
             }
         });

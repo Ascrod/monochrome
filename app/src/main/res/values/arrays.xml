@@ -23,10 +23,19 @@
         <item>6</item>
     </string-array>
 
+    <!-- User agent -->
+    <string-array name="setting_entries_user_agent">
+        <item>@string/setting_summary_user_agent_default</item>
+        <item>@string/setting_summary_user_agent_desktop</item>
+    </string-array>
+
+    <string-array name="setting_values_user_agent">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
 
     <!-- Rendering -->
 
-    <!-- User agent -->
     <string-array name="setting_entries_nav_pos">
         <item>@string/setting_summary_nav_pos_right</item>
         <item>@string/setting_summary_nav_pos_left</item>

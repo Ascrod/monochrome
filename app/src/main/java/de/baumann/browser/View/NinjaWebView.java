@@ -95,6 +95,9 @@ public class NinjaWebView extends WebView implements AlbumController {
         return foreground;
     }
 
+    private String userAgentOriginal;
+    private String userAgentDesktop;
+
     private BrowserController browserController = null;
     public BrowserController getBrowserController() {
         return browserController;
@@ -145,6 +148,8 @@ public class NinjaWebView extends WebView implements AlbumController {
 
     private synchronized void initWebSettings() {
         webSettings = getSettings();
+        userAgentOriginal = webSettings.getUserAgentString();
+        userAgentDesktop = userAgentOriginal.replaceFirst("\\(([^)]+)\\)", BrowserUnit.UA_DESKTOP_SYSTEM);
 
         webSettings.setAllowContentAccess(true);
         webSettings.setAllowFileAccess(true);
@@ -175,6 +180,15 @@ public class NinjaWebView extends WebView implements AlbumController {
         webSettings.setBlockNetworkImage(!sp.getBoolean(context.getString(R.string.sp_images), true));
         webSettings.setJavaScriptEnabled(sp.getBoolean(context.getString(R.string.sp_javascript), true));
         webSettings.setJavaScriptCanOpenWindowsAutomatically(sp.getBoolean(context.getString(R.string.sp_javascript), true));
+
+        int userAgent = Integer.valueOf(sp.getString(context.getString(R.string.sp_user_agent), "0"));
+        if (userAgent == 1) {
+            webSettings.setUserAgentString(userAgentDesktop);
+        } else if (userAgent == 2) {
+            webSettings.setUserAgentString(sp.getString(context.getString(R.string.sp_user_agent_custom), userAgentOriginal));
+        } else {
+            webSettings.setUserAgentString(userAgentOriginal);
+        }
 
         if (sp.getBoolean(("sp_remote"), true)) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
