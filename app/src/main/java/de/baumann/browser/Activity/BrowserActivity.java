@@ -137,7 +137,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private RelativeLayout tv_tabPreview;
     private LinearLayout tv_quit;
 
-    private LinearLayout tv_shareScreenshot;
     private LinearLayout tv_shareLink;
     private LinearLayout tv_menu_save_as;
     private LinearLayout tv_openWith;
@@ -875,12 +874,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 doubleTapsQuit();
                 break;
 
-            case R.id.tv_shareScreenshot:
-                bottomSheetDialog.cancel();
-                sp.edit().putInt("screenshot", 1).apply();
-                new ScreenshotTask(BrowserActivity.this, ninjaWebView).execute();
-                break;
-
             case R.id.tv_shareLink:
                 bottomSheetDialog.cancel();
                 if (prepareRecord()) {
@@ -1146,7 +1139,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_tabPreview.setVisibility(View.VISIBLE);
                 tv_quit.setVisibility(View.VISIBLE);
 
-                tv_shareScreenshot.setVisibility(View.GONE);
                 tv_shareLink.setVisibility(View.GONE);
                 tv_menu_save_as.setVisibility(View.GONE);
                 tv_openWith.setVisibility(View.GONE);
@@ -1178,7 +1170,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_tabPreview.setVisibility(View.GONE);
                 tv_quit.setVisibility(View.GONE);
 
-                tv_shareScreenshot.setVisibility(View.VISIBLE);
                 tv_shareLink.setVisibility(View.VISIBLE);
                 tv_menu_save_as.setVisibility(View.VISIBLE);
                 tv_openWith.setVisibility(View.VISIBLE);
@@ -1210,7 +1201,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_tabPreview.setVisibility(View.GONE);
                 tv_quit.setVisibility(View.GONE);
 
-                tv_shareScreenshot.setVisibility(View.GONE);
                 tv_shareLink.setVisibility(View.GONE);
                 tv_menu_save_as.setVisibility(View.GONE);
                 tv_openWith.setVisibility(View.GONE);
@@ -1243,7 +1233,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_tabPreview.setVisibility(View.GONE);
                 tv_quit.setVisibility(View.GONE);
 
-                tv_shareScreenshot.setVisibility(View.GONE);
                 tv_shareLink.setVisibility(View.GONE);
                 tv_menu_save_as.setVisibility(View.GONE);
                 tv_openWith.setVisibility(View.GONE);
@@ -3203,8 +3192,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         tv_quit = dialogView.findViewById(R.id.tv_quit);
         tv_quit.setOnClickListener(BrowserActivity.this);
 
-        tv_shareScreenshot = dialogView.findViewById(R.id.tv_shareScreenshot);
-        tv_shareScreenshot.setOnClickListener(BrowserActivity.this);
         tv_shareLink = dialogView.findViewById(R.id.tv_shareLink);
         tv_shareLink.setOnClickListener(BrowserActivity.this);
         tv_menu_save_as = dialogView.findViewById(R.id.tv_menu_save_as);
