@@ -153,6 +153,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private LinearLayout tv_saveScreenshot;
     private LinearLayout tv_saveBookmark;
     private LinearLayout tv_save_pdf;
+    private LinearLayout tv_save_as;
     private LinearLayout tv_saveStart;
     private LinearLayout tv_saveLogin;
 
@@ -996,6 +997,79 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 dialog.show();
                 break;
 
+            case R.id.tv_save_as:
+                bottomSheetDialog.cancel();
+                try {
+                    String filename = url.substring(url.lastIndexOf("/")+1);
+
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(BrowserActivity.this);
+                    View dialogView2 = View.inflate(BrowserActivity.this, R.layout.dialog_edit, null);
+
+                    final EditText editText = dialogView2.findViewById(R.id.dialog_edit);
+
+                    editText.setHint(R.string.dialog_title_hint);
+                    editText.setText(filename);
+                    editText.setSelection(filename.length());
+
+                    builder2.setView(dialogView2);
+                    builder2.setTitle(R.string.menu_edit);
+                    builder2.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            String text = editText.getText().toString().trim();
+                            if (text.isEmpty()) {
+                                NinjaToast.show(BrowserActivity.this, getString(R.string.toast_input_empty));
+                            } else {
+
+                                if (android.os.Build.VERSION.SDK_INT >= 23) {
+                                    int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                    if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                                        NinjaToast.show(BrowserActivity.this, R.string.toast_permission_sdCard_sec);
+                                    } else {
+                                        Uri source = Uri.parse(url);
+                                        DownloadManager.Request request = new DownloadManager.Request(source);
+                                        request.addRequestHeader("Cookie", CookieManager.getInstance().getCookie(url));
+                                        request.allowScanningByMediaScanner();
+                                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, text);
+                                        DownloadManager dm = (DownloadManager) BrowserActivity.this.getSystemService(DOWNLOAD_SERVICE);
+                                        assert dm != null;
+                                        dm.enqueue(request);
+                                        hideSoftInput(editText);
+                                    }
+                                } else {
+                                    Uri source = Uri.parse(url);
+                                    DownloadManager.Request request = new DownloadManager.Request(source);
+                                    request.addRequestHeader("Cookie", CookieManager.getInstance().getCookie(url));
+                                    request.allowScanningByMediaScanner();
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, text);
+                                    DownloadManager dm = (DownloadManager) BrowserActivity.this.getSystemService(DOWNLOAD_SERVICE);
+                                    assert dm != null;
+                                    dm.enqueue(request);
+                                    hideSoftInput(editText);
+                                }
+
+                            }
+                        }
+                    });
+                    builder2.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                            hideSoftInput(editText);
+                        }
+                    });
+
+                    AlertDialog dialog2 = builder2.create();
+                    dialog2.show();
+                    bottomSheetDialog.cancel();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
                 // Omnibox
 
             case R.id.tv_relayout:
@@ -1148,6 +1222,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
                 tv_saveLogin.setVisibility(View.GONE);
+                tv_save_as.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.VISIBLE);
                 floatButton_saveView.setVisibility(View.INVISIBLE);
@@ -1179,6 +1254,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
                 tv_saveLogin.setVisibility(View.GONE);
+                tv_save_as.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.INVISIBLE);
                 floatButton_saveView.setVisibility(View.INVISIBLE);
@@ -1210,6 +1286,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_save_pdf.setVisibility(View.VISIBLE);
                 tv_saveStart.setVisibility(View.VISIBLE);
                 tv_saveLogin.setVisibility(View.GONE);
+                tv_save_as.setVisibility(View.VISIBLE);
 
                 tv_relayout.setVisibility(View.GONE);
                 tv_searchSite.setVisibility(View.GONE);
@@ -1241,6 +1318,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_saveBookmark.setVisibility(View.GONE);
                 tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
+                tv_save_as.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.INVISIBLE);
                 floatButton_saveView.setVisibility(View.INVISIBLE);
@@ -3209,6 +3287,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         tv_saveStart.setOnClickListener(BrowserActivity.this);
         tv_saveLogin = dialogView.findViewById(R.id.tv_saveLogin);
         tv_saveLogin.setOnClickListener(BrowserActivity.this);
+        tv_save_as = dialogView.findViewById(R.id.tv_save_as);
+        tv_save_as.setOnClickListener(BrowserActivity.this);
 
         tv_relayout = dialogView.findViewById(R.id.tv_relayout);
         tv_relayout.setOnClickListener(BrowserActivity.this);
