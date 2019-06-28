@@ -138,6 +138,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private LinearLayout tv_quit;
 
     private LinearLayout tv_shareLink;
+    private LinearLayout tv_copy_link;
     private LinearLayout tv_openWith;
 
     private LinearLayout tv_relayout;
@@ -882,6 +883,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 }
                 break;
 
+            case R.id.tv_copy_link:
+                bottomSheetDialog.cancel();
+                BrowserUnit.copyURL(BrowserActivity.this, url);
+                break;
+
             case R.id.tv_openWith:
                 bottomSheetDialog.cancel();
                 Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -1134,6 +1140,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_quit.setVisibility(View.VISIBLE);
 
                 tv_shareLink.setVisibility(View.GONE);
+                tv_copy_link.setVisibility(View.GONE);
                 tv_openWith.setVisibility(View.GONE);
 
                 tv_saveScreenshot.setVisibility(View.GONE);
@@ -1164,6 +1171,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_quit.setVisibility(View.GONE);
 
                 tv_shareLink.setVisibility(View.VISIBLE);
+                tv_copy_link.setVisibility(View.VISIBLE);
                 tv_openWith.setVisibility(View.VISIBLE);
 
                 tv_saveScreenshot.setVisibility(View.GONE);
@@ -1194,6 +1202,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_quit.setVisibility(View.GONE);
 
                 tv_shareLink.setVisibility(View.GONE);
+                tv_copy_link.setVisibility(View.GONE);
                 tv_openWith.setVisibility(View.GONE);
 
                 tv_saveScreenshot.setVisibility(View.VISIBLE);
@@ -1225,6 +1234,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_quit.setVisibility(View.GONE);
 
                 tv_shareLink.setVisibility(View.GONE);
+                tv_copy_link.setVisibility(View.GONE);
                 tv_openWith.setVisibility(View.GONE);
 
                 tv_saveScreenshot.setVisibility(View.GONE);
@@ -3184,6 +3194,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         tv_shareLink = dialogView.findViewById(R.id.tv_shareLink);
         tv_shareLink.setOnClickListener(BrowserActivity.this);
+        tv_copy_link = dialogView.findViewById(R.id.tv_copy_link);
+        tv_copy_link.setOnClickListener(BrowserActivity.this);
         tv_openWith = dialogView.findViewById(R.id.tv_openWith);
         tv_openWith.setOnClickListener(BrowserActivity.this);
 

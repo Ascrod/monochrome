@@ -2,6 +2,8 @@ package de.baumann.browser.Unit;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -192,6 +194,15 @@ public class BrowserUnit {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static void copyURL(Context context, String url) {
+        ClipboardManager manager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData data = ClipData.newPlainText(null, url.trim());
+        assert manager != null;
+        manager.setPrimaryClip(data);
+        String text = context.getString(R.string.toast_copy_successful) + ": " + url;
+        NinjaToast.show(context, text);
     }
 
     public static void download(final Context context, String url, String contentDisposition, String mimeType) {
