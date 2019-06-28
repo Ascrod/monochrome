@@ -151,7 +151,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
     private LinearLayout tv_saveScreenshot;
     private LinearLayout tv_saveBookmark;
-    private LinearLayout tv3_menu_save_as;
+    private LinearLayout tv_save_pdf;
     private LinearLayout tv_saveStart;
     private LinearLayout tv_saveLogin;
 
@@ -896,6 +896,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 new ScreenshotTask(BrowserActivity.this, ninjaWebView).execute();
                 break;
 
+            case R.id.tv_save_pdf:
+                bottomSheetDialog.cancel();
+                printPDF(false);
+                break;
+
             case R.id.tv_saveBookmark:
                 bottomSheetDialog.cancel();
                 action.open(true);
@@ -1061,11 +1066,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 showSearchPanel();
                 break;
 
-            case R.id.tv3_menu_save_as:
-                bottomSheetDialog.cancel();
-                printPDF(false);
-                break;
-
             case R.id.tv_settings:
                 bottomSheetDialog.cancel();
                 Intent settings = new Intent(BrowserActivity.this, Settings_Activity.class);
@@ -1138,7 +1138,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                 tv_saveScreenshot.setVisibility(View.GONE);
                 tv_saveBookmark.setVisibility(View.GONE);
-                tv3_menu_save_as.setVisibility(View.GONE);
+                tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
                 tv_saveLogin.setVisibility(View.GONE);
 
@@ -1168,7 +1168,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                 tv_saveScreenshot.setVisibility(View.GONE);
                 tv_saveBookmark.setVisibility(View.GONE);
-                tv3_menu_save_as.setVisibility(View.GONE);
+                tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
                 tv_saveLogin.setVisibility(View.GONE);
 
@@ -1198,7 +1198,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                 tv_saveScreenshot.setVisibility(View.VISIBLE);
                 tv_saveBookmark.setVisibility(View.VISIBLE);
-                tv3_menu_save_as.setVisibility(View.VISIBLE);
+                tv_save_pdf.setVisibility(View.VISIBLE);
                 tv_saveStart.setVisibility(View.VISIBLE);
                 tv_saveLogin.setVisibility(View.GONE);
 
@@ -1229,7 +1229,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                 tv_saveScreenshot.setVisibility(View.GONE);
                 tv_saveBookmark.setVisibility(View.GONE);
-                tv3_menu_save_as.setVisibility(View.GONE);
+                tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.INVISIBLE);
@@ -2894,7 +2894,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             }
         });
 
-        tv3_menu_save_as = dialogView.findViewById(R.id.tv3_menu_save_as);
+        LinearLayout tv3_menu_save_as = dialogView.findViewById(R.id.tv3_menu_save_as);
         tv3_menu_save_as.setVisibility(View.VISIBLE);
         tv3_menu_save_as.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -3191,8 +3191,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         tv_saveScreenshot.setOnClickListener(BrowserActivity.this);
         tv_saveBookmark = dialogView.findViewById(R.id.tv_saveBookmark);
         tv_saveBookmark.setOnClickListener(BrowserActivity.this);
-        tv3_menu_save_as = dialogView.findViewById(R.id.tv3_menu_save_as);
-        tv3_menu_save_as.setOnClickListener(BrowserActivity.this);
+        tv_save_pdf = dialogView.findViewById(R.id.tv_save_pdf);
+        tv_save_pdf.setOnClickListener(BrowserActivity.this);
         tv_saveStart = dialogView.findViewById(R.id.tv_saveStart);
         tv_saveStart.setOnClickListener(BrowserActivity.this);
         tv_saveLogin = dialogView.findViewById(R.id.tv_saveLogin);

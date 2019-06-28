@@ -306,7 +306,7 @@
 
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/tv3_menu_save_as"
+                android:id="@+id/tv_save_pdf"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:minHeight="46dp"
