@@ -64,29 +64,11 @@ public class HolderService extends Service implements BrowserController {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sp.getBoolean("sp_background", true)) {
-            WebView.enableSlowWholeDocumentDraw();
-            NinjaWebView webView = new NinjaWebView(new NinjaContextWrapper(this));
-
-            webView.setBrowserController(this);
-            webView.setFlag(BrowserUnit.FLAG_NINJA);
-            webView.setAlbumCover(null);
-            webView.setAlbumTitle(getString(R.string.album_untitled));
-            ViewUnit.bound(this, webView);
-
-            webView.loadUrl(RecordUnit.getHolder().getURL());
-            webView.deactivate();
-
-            BrowserContainer.add(webView);
-            updateNotification();
-        } else {
-            Intent toActivity = new Intent(HolderService.this, BrowserActivity.class);
-            toActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            toActivity.setAction(Intent.ACTION_SEND);
-            toActivity.putExtra(Intent.EXTRA_TEXT, RecordUnit.getHolder().getURL());
-            startActivity(toActivity);
-        }
-
+        Intent toActivity = new Intent(HolderService.this, BrowserActivity.class);
+        toActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        toActivity.setAction(Intent.ACTION_SEND);
+        toActivity.putExtra(Intent.EXTRA_TEXT, RecordUnit.getHolder().getURL());
+        startActivity(toActivity);
         return START_STICKY;
     }
 

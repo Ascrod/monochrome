@@ -171,9 +171,6 @@
     leave fullscreen mode.</string>
     <string name="setting_title_omnibox_control">Omnibox Control</string>
     <string name="setting_summary_omnibox_control">Swipe omnibox left/right to switch tabs</string>
-    <string name="setting_title_background">Open links</string>
-    <string name="setting_summary_background">Display a notification and open links in background. If disabled links will open
-    immediately.</string>
     <string name="setting_title_themeDark">Light theme</string>
     <string name="setting_summary_themeDark">You like it a little bit brighter? Do it!</string>
 

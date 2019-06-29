@@ -2,12 +2,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference android:key="sp_background"
-        android:icon="@drawable/icon_link"
-        android:defaultValue="true"
-        android:title="@string/setting_title_background"
-        android:summary="@string/setting_summary_background"/>
-
     <CheckBoxPreference android:key="sp_darkUI"
         android:icon="@drawable/icon_ui"
         android:defaultValue="false"
