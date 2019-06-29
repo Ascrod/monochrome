@@ -283,8 +283,6 @@
     <string name="toast_close_tab">Do you want to close current tab?</string>
     <string name="toast_closeNotification">Close all opened websites.</string>
     <string name="toast_downloadComplete">Download complete. Open file manager?</string>
-    <string name="toast_unsecured">This website uses an unsecured connection (\"http\"). Do you want to try a secure
-        connection (\"https\")?</string>
     <string name="toast_backup">Backup data? This will overwrite the old backup.</string>
 
 

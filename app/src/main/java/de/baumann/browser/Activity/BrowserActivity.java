@@ -1321,35 +1321,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     ninjaWebView = (NinjaWebView) currentAlbumController;
                     ninjaWebView.stopLoading();
                     if (ninjaWebView.isLoadFinish()) {
-
-                        if (!url.startsWith("https://")) {
-                            bottomSheetDialog = new BottomSheetDialog(BrowserActivity.this);
-                            View dialogView2 = View.inflate(BrowserActivity.this, R.layout.dialog_action, null);
-                            TextView textView2 = dialogView2.findViewById(R.id.dialog_text);
-                            textView2.setText(R.string.toast_unsecured);
-                            Button action_ok2 = dialogView2.findViewById(R.id.action_ok);
-                            action_ok2.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    bottomSheetDialog.cancel();
-                                    ninjaWebView.loadUrl(url.replace("http://", "https://"));
-                                }
-                            });
-                            Button action_cancel2 = dialogView2.findViewById(R.id.action_cancel);
-                            action_cancel2.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    bottomSheetDialog.cancel();
-                                    ninjaWebView.reload();
-                                }
-                            });
-                            bottomSheetDialog.setContentView(dialogView2);
-                            bottomSheetDialog.show();
-                        } else {
-                            ninjaWebView.reload();
-                        }
-
-
+                        ninjaWebView.reload();
                     } else {
                         ninjaWebView.stopLoading();
                     }
@@ -2744,11 +2716,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         } else {
             if (currentAlbumController instanceof NinjaWebView) {
                 try {
-                    if (ninjaWebView.getUrl().contains("https://")) {
-                        omniboxRefresh.setImageDrawable(ViewUnit.getDrawable(this, R.drawable.ic_action_refresh));
-                    } else {
-                        omniboxRefresh.setImageDrawable(ViewUnit.getDrawable(BrowserActivity.this, R.drawable.icon_alert));
-                    }
+                    omniboxRefresh.setImageDrawable(ViewUnit.getDrawable(this, R.drawable.ic_action_refresh));
                 } catch (Exception e) {
                     omniboxRefresh.setImageDrawable(ViewUnit.getDrawable(this, R.drawable.ic_action_refresh));
                 }
