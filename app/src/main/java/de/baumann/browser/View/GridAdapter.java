@@ -4,18 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.baumann.browser.Ninja.R;
 import de.baumann.browser.Unit.BrowserUnit;
-import de.baumann.browser.View.GridItem;
-
-import org.askerov.dynamicgrid.BaseDynamicGridAdapter;
 
 import java.util.List;
 
-public class GridAdapter extends BaseDynamicGridAdapter {
+public class GridAdapter extends BaseAdapter {
     private static class Holder {
         TextView title;
         ImageView cover;
@@ -28,8 +26,7 @@ public class GridAdapter extends BaseDynamicGridAdapter {
 
     private final Context context;
 
-    public GridAdapter(Context context, List<GridItem> list, int columnCount) {
-        super(context, list, columnCount);
+    public GridAdapter(Context context, List<GridItem> list) {
         this.context = context;
         this.list = list;
     }
@@ -54,5 +51,17 @@ public class GridAdapter extends BaseDynamicGridAdapter {
         holder.cover.setImageBitmap(BrowserUnit.file2Bitmap(context, item.getFilename()));
 
         return view;
+    }
+
+    public int getCount() {
+        return list.size();
+    }
+
+    public Object getItem(int arg0) {
+        return list.get(arg0);
+    }
+
+    public long getItemId(int arg0) {
+        return arg0;
     }
 }

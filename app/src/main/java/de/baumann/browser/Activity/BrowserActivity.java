@@ -68,6 +68,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -80,8 +81,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.mobapphome.mahencryptorlib.MAHEncryptor;
-
-import org.askerov.dynamicgrid.DynamicGridView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -640,19 +639,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         create = false;
         inputBox.clearFocus();
-        if (currentAlbumController != null && currentAlbumController instanceof NinjaRelativeLayout) {
-            ninjaRelativeLayout = (NinjaRelativeLayout) currentAlbumController;
-            if (ninjaRelativeLayout.getFlag() == BrowserUnit.FLAG_HOME) {
-                DynamicGridView gridView = ninjaRelativeLayout.findViewById(R.id.home_grid);
-                if (gridView.isEditMode()) {
-                    gridView.stopEditMode();
-                    relayoutOK.setVisibility(View.GONE);
-                    omnibox.setVisibility(View.VISIBLE);
-                    initHomeGrid(ninjaRelativeLayout);
-                }
-            }
-        }
-
         IntentUnit.setContext(this);
         super.onPause();
     }
@@ -1077,7 +1063,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 omnibox.setVisibility(View.GONE);
                 relayoutOK.setVisibility(View.VISIBLE);
 
-                final DynamicGridView gridView = ninjaRelativeLayout.findViewById(R.id.home_grid);
+                final GridView gridView = ninjaRelativeLayout.findViewById(R.id.home_grid);
                 final List<GridItem> gridList = ((GridAdapter) gridView.getAdapter()).getList();
 
                 relayoutOK.setOnTouchListener(new View.OnTouchListener() {
@@ -1091,7 +1077,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 relayoutOK.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gridView.stopEditMode();
                         relayoutOK.setVisibility(View.GONE);
                         omnibox.setVisibility(View.VISIBLE);
 
@@ -1105,40 +1090,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         NinjaToast.show(BrowserActivity.this, getString(R.string.toast_relayout_successful));
                     }
                 });
-
-                gridView.setOnDragListener(new DynamicGridView.OnDragListener() {
-                    private GridItem dragItem;
-
-                    @Override
-                    public void onDragStarted(int position) {
-                        dragItem = gridList.get(position);
-                    }
-
-                    @Override
-                    public void onDragPositionsChanged(int oldPosition, int newPosition) {
-                        if (oldPosition < newPosition) {
-                            for (int i = newPosition; i > oldPosition; i--) {
-                                GridItem item = gridList.get(i);
-                                item.setOrdinal(i - 1);
-                            }
-                        } else if (oldPosition > newPosition) {
-                            for (int i = newPosition; i < oldPosition; i++) {
-                                GridItem item = gridList.get(i);
-                                item.setOrdinal(i + 1);
-                            }
-                        }
-                        dragItem.setOrdinal(newPosition);
-
-                        Collections.sort(gridList, new Comparator<GridItem>() {
-                            @Override
-                            public int compare(GridItem first, GridItem second) {
-                                return Integer.compare(first.getOrdinal(), second.getOrdinal());
-                            }
-                        });
-                    }
-                });
-                gridView.startEditMode();
-                break;
 
             case R.id.tv_searchSite:
                 bottomSheetDialog.cancel();
@@ -1657,7 +1608,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             updateOmnibox();
         }
 
-        final DynamicGridView gridView = layout.findViewById(R.id.home_grid);
+        final GridView gridView = layout.findViewById(R.id.home_grid);
         final ListView home_list = layout.findViewById(R.id.home_list);
         final View open_newTabView = layout.findViewById(R.id.open_newTabView);
         final View open_passView = layout.findViewById(R.id.open_passView);
@@ -1685,7 +1636,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             final List<GridItem> gridList = action.listGrid();
             action.close();
 
-            GridAdapter gridAdapter = new de.baumann.browser.View.GridAdapter(this, gridList, 2);
+            GridAdapter gridAdapter = new de.baumann.browser.View.GridAdapter(this, gridList);
             gridView.setAdapter(gridAdapter);
             gridAdapter.notifyDataSetChanged();
 

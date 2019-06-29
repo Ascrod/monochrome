@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/home_buttons">
 
-                <org.askerov.dynamicgrid.DynamicGridView
+                <GridView
                     android:visibility="gone"
                     android:paddingEnd="4dp"
                     android:paddingStart="4dp"
@@ -35,7 +35,7 @@
                     android:gravity="center"
                     android:stretchMode="columnWidth"
                     android:numColumns="auto_fit">
-                </org.askerov.dynamicgrid.DynamicGridView>
+                </GridView>
 
                 <ListView
                     android:visibility="gone"
