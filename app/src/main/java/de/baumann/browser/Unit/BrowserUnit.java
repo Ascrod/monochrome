@@ -67,9 +67,6 @@ public class BrowserUnit {
     private static final String SEARCH_ENGINE_DUCKDUCKGO = "https://duckduckgo.com/?q=";
     private static final String SEARCH_ENGINE_STARTPAGE = "https://startpage.com/do/search?query=";
     private static final String SEARCH_ENGINE_BING = "http://www.bing.com/search?q=";
-    private static final String SEARCH_ENGINE_BAIDU = "https://www.baidu.com/s?wd=";
-
-    private static final String SEARCH_ENGINE_STARTPAGE_DE = "https://startpage.com/do/search?lui=deu&language=deutsch&query=";
     private static final String SEARCH_ENGINE_SEARX = "https://searx.me/?q=";
 
     public static final String UA_DESKTOP_SYSTEM = "(Windows NT 10.0; Win64; x64)";
@@ -149,27 +146,23 @@ public class BrowserUnit {
         }
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        String custom = sp.getString(context.getString(R.string.sp_search_engine_custom), SEARCH_ENGINE_STARTPAGE);
+        String custom = sp.getString(context.getString(R.string.sp_search_engine_custom), SEARCH_ENGINE_DUCKDUCKGO);
         final int i = Integer.valueOf(sp.getString(context.getString(R.string.sp_search_engine), "0"));
         switch (i) {
             case 0:
-                return SEARCH_ENGINE_STARTPAGE + query;
+                return SEARCH_ENGINE_DUCKDUCKGO + query;
             case 1:
-                return SEARCH_ENGINE_STARTPAGE_DE + query;
+                return SEARCH_ENGINE_STARTPAGE + query;
             case 2:
-                return SEARCH_ENGINE_BAIDU + query;
+                return SEARCH_ENGINE_SEARX + query;
             case 3:
                 return SEARCH_ENGINE_BING + query;
             case 4:
-                return SEARCH_ENGINE_DUCKDUCKGO + query;
-            case 5:
                 return SEARCH_ENGINE_GOOGLE + query;
-            case 6:
-                return SEARCH_ENGINE_SEARX + query;
-            case 7:
+            case 5:
                 return custom + query;
             default:
-                return SEARCH_ENGINE_STARTPAGE + query;
+                return SEARCH_ENGINE_DUCKDUCKGO + query;
         }
     }
 
