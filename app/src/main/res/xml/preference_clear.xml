@@ -10,9 +10,10 @@
         android:defaultValue="false"
         android:title="@string/clear_title_history"/>
 
-    <CheckBoxPreference android:key="sp_clearIndexedDB"
+    <CheckBoxPreference android:key="sp_clear_siteData"
         android:defaultValue="false"
-        android:title="@string/clear_title_indexedDB"/>
+        android:title="@string/clear_title_siteData"
+        android:summary="@string/clear_summary_siteData"/>
 
     <CheckBoxPreference android:key="@string/sp_clear_cookie"
         android:defaultValue="false"

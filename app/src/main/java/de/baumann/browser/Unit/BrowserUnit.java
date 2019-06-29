@@ -520,7 +520,7 @@ public class BrowserUnit {
         action.close();
     }
 
-    public static void clearIndexedDB (Context context) {
+    public static void clearSiteData (Context context) {
 
         File data = Environment.getDataDirectory();
 

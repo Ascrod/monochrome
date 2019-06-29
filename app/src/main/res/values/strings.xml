@@ -151,7 +151,8 @@
     <string name="clear_title_cache">Clear Cache</string>
     <string name="clear_title_cookie">Clear Cookies</string>
     <string name="clear_title_history">Clear History</string>
-    <string name="clear_title_indexedDB">Clear \"indexed databases\" and \"local webview storage\"</string>
+    <string name="clear_title_siteData">Clear Website Data</string>
+    <string name="clear_summary_siteData">Deletes all Indexed DB and Local Storage data.</string>
 
     <string name="clear_title_deleteDatabase">Delete database</string>
     <string name="clear_summary_deleteDatabase">Delete the whole database (Startpage, bookmarks, history and all whitelists).</string>

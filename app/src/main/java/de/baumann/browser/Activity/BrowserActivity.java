@@ -646,11 +646,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     @Override
     public void onDestroy() {
 
-        boolean clearIndexedDB = sp.getBoolean(("sp_clearIndexedDB"), false);
-        if (clearIndexedDB) {
-            BrowserUnit.clearIndexedDB(this);
-        }
-
         Intent toHolderService = new Intent(this, HolderService.class);
         IntentUnit.setClear(true);
         stopService(toHolderService);

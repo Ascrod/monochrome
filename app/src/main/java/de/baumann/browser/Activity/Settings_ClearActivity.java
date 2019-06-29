@@ -101,7 +101,7 @@ public class Settings_ClearActivity extends AppCompatActivity {
         boolean clearCache = sp.getBoolean(getString(R.string.sp_clear_cache), false);
         boolean clearCookie = sp.getBoolean(getString(R.string.sp_clear_cookie), false);
         boolean clearHistory = sp.getBoolean(getString(R.string.sp_clear_history), false);
-        boolean clearIndexedDB = sp.getBoolean(("sp_clearIndexedDB"), false);
+        boolean clearSiteData = sp.getBoolean(getString(R.string.sp_clear_siteData), false);
 
         BottomSheetDialog dialog = new BottomSheetDialog(this);
 
@@ -122,8 +122,8 @@ public class Settings_ClearActivity extends AppCompatActivity {
         if (clearHistory) {
             BrowserUnit.clearHistory(this);
         }
-        if (clearIndexedDB) {
-            BrowserUnit.clearIndexedDB(this);
+        if (clearSiteData) {
+            BrowserUnit.clearSiteData(this);
         }
 
         dialog.hide();
