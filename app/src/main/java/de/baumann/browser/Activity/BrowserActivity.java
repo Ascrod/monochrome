@@ -2576,7 +2576,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     }
 
     private void closeTabConfirmation(final Runnable okAction) {
-        if(!sp.getBoolean("sp_close_tab_confirm", true)) {
+        if(!sp.getBoolean("sp_close_tab_confirm", false)) {
             okAction.run();
         } else {
             switcherPanel.expanded();
@@ -3010,7 +3010,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     }
 
     private void doubleTapsQuit() {
-        if (!sp.getBoolean("sp_close_browser_confirm", true)) {
+        if (!sp.getBoolean("sp_close_browser_confirm", false)) {
             finish();
         } else {
             bottomSheetDialog = new BottomSheetDialog(BrowserActivity.this);
