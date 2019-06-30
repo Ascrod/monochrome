@@ -1447,6 +1447,44 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         updateAutoComplete();
 
         omniboxRefresh.setOnClickListener(this);
+        omniboxRefresh.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                url = ninjaWebView.getUrl();
+                if (url == null) {
+                    return false;
+                }
+                url = url.trim();
+                if (url.startsWith("https://")) {
+                    return false;
+                }
+
+                bottomSheetDialog = new BottomSheetDialog(BrowserActivity.this);
+                View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_action, null);
+                TextView textView = dialogView.findViewById(R.id.dialog_text);
+                textView.setText(R.string.toast_attempt_secure);
+                Button action_ok = dialogView.findViewById(R.id.action_ok);
+                action_ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        bottomSheetDialog.cancel();
+                        ninjaWebView.loadUrl(url.replace("http://", "https://"));
+                    }
+                });
+                Button action_cancel = dialogView.findViewById(R.id.action_cancel);
+                action_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        bottomSheetDialog.cancel();
+                        ninjaWebView.reload();
+                    }
+                });
+                bottomSheetDialog.setContentView(dialogView);
+                bottomSheetDialog.show();
+                return false;
+            }
+        });
+
         omniboxOverflow.setOnClickListener(this);
 
         omniboxOverflow.setOnLongClickListener(new View.OnLongClickListener() {
