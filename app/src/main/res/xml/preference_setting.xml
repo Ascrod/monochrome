@@ -62,7 +62,7 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/setting_title_others">
+    <PreferenceCategory android:title="@string/setting_title_about">
 
         <Preference
             android:icon="@drawable/icon_list"
