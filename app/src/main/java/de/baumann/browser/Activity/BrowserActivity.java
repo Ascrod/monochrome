@@ -942,75 +942,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             case R.id.tv_save_as:
                 bottomSheetDialog.cancel();
-                try {
-                    String filename = url.substring(url.lastIndexOf("/")+1);
-
-                    AlertDialog.Builder builder2 = new AlertDialog.Builder(BrowserActivity.this);
-                    View dialogView2 = View.inflate(BrowserActivity.this, R.layout.dialog_edit, null);
-
-                    final EditText editText = dialogView2.findViewById(R.id.dialog_edit);
-
-                    editText.setHint(R.string.dialog_title_hint);
-                    editText.setText(filename);
-                    editText.setSelection(filename.length());
-
-                    builder2.setView(dialogView2);
-                    builder2.setTitle(R.string.menu_edit);
-                    builder2.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-
-                            String text = editText.getText().toString().trim();
-                            if (text.isEmpty()) {
-                                NinjaToast.show(BrowserActivity.this, getString(R.string.toast_input_empty));
-                            } else {
-
-                                if (android.os.Build.VERSION.SDK_INT >= 23) {
-                                    int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                                    if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                                        NinjaToast.show(BrowserActivity.this, R.string.toast_permission_sdCard_sec);
-                                    } else {
-                                        Uri source = Uri.parse(url);
-                                        DownloadManager.Request request = new DownloadManager.Request(source);
-                                        request.addRequestHeader("Cookie", CookieManager.getInstance().getCookie(url));
-                                        request.allowScanningByMediaScanner();
-                                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
-                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, text);
-                                        DownloadManager dm = (DownloadManager) BrowserActivity.this.getSystemService(DOWNLOAD_SERVICE);
-                                        assert dm != null;
-                                        dm.enqueue(request);
-                                        hideSoftInput(editText);
-                                    }
-                                } else {
-                                    Uri source = Uri.parse(url);
-                                    DownloadManager.Request request = new DownloadManager.Request(source);
-                                    request.addRequestHeader("Cookie", CookieManager.getInstance().getCookie(url));
-                                    request.allowScanningByMediaScanner();
-                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
-                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, text);
-                                    DownloadManager dm = (DownloadManager) BrowserActivity.this.getSystemService(DOWNLOAD_SERVICE);
-                                    assert dm != null;
-                                    dm.enqueue(request);
-                                    hideSoftInput(editText);
-                                }
-
-                            }
-                        }
-                    });
-                    builder2.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                            hideSoftInput(editText);
-                        }
-                    });
-
-                    AlertDialog dialog2 = builder2.create();
-                    dialog2.show();
-                    bottomSheetDialog.cancel();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                saveFile(url);
                 break;
 
                 // Omnibox
@@ -1329,6 +1261,67 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         }
     }
 
+    private void saveFile(final String url) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(BrowserActivity.this);
+        View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_edit, null);
+
+        final EditText editText = dialogView.findViewById(R.id.dialog_edit);
+
+        editText.setHint(R.string.dialog_title_hint);
+        editText.setText(HelperUnit.fileName(ninjaWebView.getUrl()));
+        editText.selectAll();
+
+        builder.setView(dialogView);
+        builder.setTitle(R.string.menu_edit);
+        builder.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String text = editText.getText().toString().trim();
+                if (text.isEmpty()) {
+                    NinjaToast.show(BrowserActivity.this, getString(R.string.toast_input_empty));
+                    return;
+                }
+
+                if (android.os.Build.VERSION.SDK_INT >= 23) {
+                    int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                        NinjaToast.show(BrowserActivity.this, R.string.toast_permission_sdCard_sec);
+                    } else {
+                        Uri source = Uri.parse(url);
+                        DownloadManager.Request request = new DownloadManager.Request(source);
+                        request.addRequestHeader("Cookie", CookieManager.getInstance().getCookie(url));
+                        request.allowScanningByMediaScanner();
+                        //Notify client once download is completed!
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, text);
+                        DownloadManager dm = (DownloadManager) BrowserActivity.this.getSystemService(DOWNLOAD_SERVICE);
+                        assert dm != null;
+                        dm.enqueue(request);
+                        hideSoftInput(editText);
+                    }
+                } else {
+                    Uri source = Uri.parse(url);
+                    DownloadManager.Request request = new DownloadManager.Request(source);
+                    request.addRequestHeader("Cookie", CookieManager.getInstance().getCookie(url));
+                    request.allowScanningByMediaScanner();
+                    //Notify client once download is completed!
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, text);
+                    DownloadManager dm = (DownloadManager) BrowserActivity.this.getSystemService(DOWNLOAD_SERVICE);
+                    assert dm != null;
+                    dm.enqueue(request);
+                    hideSoftInput(editText);
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
+                hideSoftInput(editText);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     private void dispatchIntent(Intent intent) {
         Intent toHolderService = new Intent(this, HolderService.class);
@@ -2857,78 +2850,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         tv3_menu_save_as.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    assert target != null;
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(BrowserActivity.this);
-                    View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_edit_extension, null);
-
-                    final EditText editTitle = dialogView.findViewById(R.id.dialog_edit);
-                    final EditText editExtension = dialogView.findViewById(R.id.dialog_edit_extension);
-
-                    editTitle.setHint(R.string.dialog_title_hint);
-                    editTitle.setText(HelperUnit.fileName(ninjaWebView.getUrl()));
-
-                    builder.setView(dialogView);
-                    builder.setTitle(R.string.menu_edit);
-                    builder.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-
-                            String title = editTitle.getText().toString().trim();
-                            String extension = editExtension.getText().toString().trim();
-                            String  filename = title + extension;
-
-                            if (title.isEmpty() || extension.isEmpty() || !extension.startsWith(".")) {
-                                NinjaToast.show(BrowserActivity.this, getString(R.string.toast_input_empty));
-                            } else {
-
-                                if (android.os.Build.VERSION.SDK_INT >= 23) {
-                                    int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                                    if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                                        NinjaToast.show(BrowserActivity.this, R.string.toast_permission_sdCard_sec);
-                                    } else {
-                                        Uri source = Uri.parse(target);
-                                        DownloadManager.Request request = new DownloadManager.Request(source);
-                                        request.addRequestHeader("Cookie", CookieManager.getInstance().getCookie(target));
-                                        request.allowScanningByMediaScanner();
-                                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
-                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                        DownloadManager dm = (DownloadManager) BrowserActivity.this.getSystemService(DOWNLOAD_SERVICE);
-                                        assert dm != null;
-                                        dm.enqueue(request);
-                                        hideSoftInput(editTitle);
-                                    }
-                                } else {
-                                    Uri source = Uri.parse(target);
-                                    DownloadManager.Request request = new DownloadManager.Request(source);
-                                    request.addRequestHeader("Cookie", CookieManager.getInstance().getCookie(target));
-                                    request.allowScanningByMediaScanner();
-                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
-                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                    DownloadManager dm = (DownloadManager) BrowserActivity.this.getSystemService(DOWNLOAD_SERVICE);
-                                    assert dm != null;
-                                    dm.enqueue(request);
-                                    hideSoftInput(editTitle);
-                                }
-                            }
-                        }
-                    });
-                    builder.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                            hideSoftInput(editTitle);
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    showSoftInput(editTitle);
-                    bottomSheetDialog.cancel();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                assert target != null;
+                bottomSheetDialog.cancel();
+                saveFile(target);
             }
         });
     }
