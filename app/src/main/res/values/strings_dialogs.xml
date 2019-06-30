@@ -69,22 +69,7 @@
         You should have received a copy of the GNU General Public License
         along with this program.  If not, see http://www.gnu.org/licenses.&lt;br>&lt;br>
 
-        &lt;i>Following open source libraries or projects are used within this software:&lt;/i>&lt;br>&lt;br>&lt;br>
-
-        &lt;b>Android Sliding Up Panel&lt;/b>&lt;br>
-        Apache License Version 2.0&lt;br>
-        Umano: News Read To You&lt;br>
-        &lt;i>http://git.io/vUruG&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Android Swipe-to-Dismiss&lt;/b>&lt;br>
-        Apache License Version 2.0&lt;br>
-        Roman Nurik&lt;br>
-        &lt;i>http://git.io/vUruO&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>Lightning Browser&lt;/b>&lt;br>
-        Mozilla Public License Version 2.0&lt;br>
-        Anthony Restaino&lt;br>
-        &lt;i>http://git.io/vUruk&lt;/i>&lt;br>&lt;br>
+        &lt;i>The following open source libraries or projects are used within this software:&lt;/i>&lt;br>&lt;br>&lt;br>
 
         &lt;b>Material Design Icons&lt;/b>&lt;br>
         SIL Open Font License, Version 1.1.&lt;br>
@@ -94,7 +79,7 @@
         &lt;b>Ninja&lt;/b>&lt;br>
         Apache License Version 2.0&lt;br>
         Matthew Lee&lt;br>
-        &lt;i>http://git.io/vUrEh&lt;/i>&lt;br>&lt;br>
+        &lt;i>https://github.com/mthli/Ninja&lt;/i>&lt;br>&lt;br>
 
         &lt;b>SimpleEncryptionLib&lt;/b>&lt;br>
         Apache License Version 2.0&lt;br>

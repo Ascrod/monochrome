@@ -11,22 +11,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-**Used open source libraries:**
-
-"Android Observable ScrollView"
-https://github.com/ksoichiro/Android-ObservableScrollView
-
-"Android Onboarder"
-https://github.com/chyrta/AndroidOnboarder
-
-"Glide"
-https://github.com/bumptech/glide
-
-"MAH Encryptor Lib"
-https://github.com/hummatli/MAHEncryptorLib
-
-"Material About Library"
-https://github.com/daniel-stoneuk/material-about-library
+*The following open source libraries or projects are used within this software:*
 
 "Material Design Icons"
 https://github.com/Templarian/MaterialDesign
+
+"Ninja"
+https://github.com/mthli/Ninja
+
+"MAH Encryptor Lib"
+https://github.com/hummatli/MAHEncryptorLib
