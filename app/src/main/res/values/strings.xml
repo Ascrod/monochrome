@@ -42,7 +42,7 @@
     <string name="menu_save_home">Save at Home</string>
     <string name="menu_save_login">Save login data</string>
     <string name="menu_save_bookmark">Save as bookmark</string>
-    <string name="menu_save_as">Save as …</string>
+    <string name="menu_save_file">Save File</string>
     <string name="menu_save_pdf">Save as PDF</string>
 
     <string name="menu_other_searchSite">Search on site</string>

@@ -157,7 +157,7 @@
 
             <LinearLayout
                 android:visibility="gone"
-                android:id="@+id/tv3_menu_save_as"
+                android:id="@+id/tv3_menu_save_file"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:minHeight="46dp"
@@ -174,7 +174,7 @@
                     android:src="@drawable/icon_menu_save" />
 
                 <TextView
-                    android:text="@string/menu_save_as"
+                    android:text="@string/menu_save_file"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ellipsize="end"

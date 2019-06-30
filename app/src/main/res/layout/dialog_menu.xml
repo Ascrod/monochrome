@@ -364,7 +364,7 @@
 
 
             <LinearLayout
-                android:id="@+id/tv_save_as"
+                android:id="@+id/tv_save_file"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:minHeight="46dp"
@@ -387,7 +387,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="@string/menu_save_as"
+                    android:text="@string/menu_save_file"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
             </LinearLayout>

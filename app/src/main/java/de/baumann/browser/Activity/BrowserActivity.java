@@ -152,7 +152,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private LinearLayout tv_saveScreenshot;
     private LinearLayout tv_saveBookmark;
     private LinearLayout tv_save_pdf;
-    private LinearLayout tv_save_as;
+    private LinearLayout tv_save_file;
     private LinearLayout tv_saveStart;
     private LinearLayout tv_saveLogin;
 
@@ -940,7 +940,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 dialog.show();
                 break;
 
-            case R.id.tv_save_as:
+            case R.id.tv_save_file:
                 bottomSheetDialog.cancel();
                 saveFile(url);
                 break;
@@ -1062,7 +1062,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
                 tv_saveLogin.setVisibility(View.GONE);
-                tv_save_as.setVisibility(View.GONE);
+                tv_save_file.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.VISIBLE);
                 floatButton_saveView.setVisibility(View.INVISIBLE);
@@ -1094,7 +1094,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
                 tv_saveLogin.setVisibility(View.GONE);
-                tv_save_as.setVisibility(View.GONE);
+                tv_save_file.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.INVISIBLE);
                 floatButton_saveView.setVisibility(View.INVISIBLE);
@@ -1126,7 +1126,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_save_pdf.setVisibility(View.VISIBLE);
                 tv_saveStart.setVisibility(View.VISIBLE);
                 tv_saveLogin.setVisibility(View.GONE);
-                tv_save_as.setVisibility(View.VISIBLE);
+                tv_save_file.setVisibility(View.VISIBLE);
 
                 tv_relayout.setVisibility(View.GONE);
                 tv_searchSite.setVisibility(View.GONE);
@@ -1158,7 +1158,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_saveBookmark.setVisibility(View.GONE);
                 tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
-                tv_save_as.setVisibility(View.GONE);
+                tv_save_file.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.INVISIBLE);
                 floatButton_saveView.setVisibility(View.INVISIBLE);
@@ -2845,9 +2845,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             }
         });
 
-        LinearLayout tv3_menu_save_as = dialogView.findViewById(R.id.tv3_menu_save_as);
-        tv3_menu_save_as.setVisibility(View.VISIBLE);
-        tv3_menu_save_as.setOnClickListener(new View.OnClickListener() {
+        LinearLayout tv3_menu_save_file = dialogView.findViewById(R.id.tv3_menu_save_file);
+        tv3_menu_save_file.setVisibility(View.VISIBLE);
+        tv3_menu_save_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 assert target != null;
@@ -3081,8 +3081,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         tv_saveStart.setOnClickListener(BrowserActivity.this);
         tv_saveLogin = dialogView.findViewById(R.id.tv_saveLogin);
         tv_saveLogin.setOnClickListener(BrowserActivity.this);
-        tv_save_as = dialogView.findViewById(R.id.tv_save_as);
-        tv_save_as.setOnClickListener(BrowserActivity.this);
+        tv_save_file = dialogView.findViewById(R.id.tv_save_file);
+        tv_save_file.setOnClickListener(BrowserActivity.this);
 
         tv_relayout = dialogView.findViewById(R.id.tv_relayout);
         tv_relayout.setOnClickListener(BrowserActivity.this);
