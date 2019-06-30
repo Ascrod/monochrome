@@ -428,59 +428,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         dispatchIntent(getIntent());
 
-        // show changelog
-
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            final String versionName = pInfo.versionName;
-            String oldVersionName = sp.getString("oldVersionName", "0.0");
-
-            if (!oldVersionName.equals(versionName)) {
-
-                bottomSheetDialog = new BottomSheetDialog(this);
-                View dialogView = View.inflate(this, R.layout.dialog_text, null);
-
-                TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
-                dialog_title.setText(R.string.changelog_title);
-
-                TextView dialog_text = dialogView.findViewById(R.id.dialog_text);
-                dialog_text.setText(HelperUnit.textSpannable(getString(R.string.changelog_dialog)));
-                dialog_text.setMovementMethod(LinkMovementMethod.getInstance());
-
-                ImageButton fab = dialogView.findViewById(R.id.floatButton_ok);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sp.edit().putString("oldVersionName", versionName).apply();
-                        bottomSheetDialog.cancel();
-                    }
-                });
-
-                ImageButton fab_help = dialogView.findViewById(R.id.floatButton_help);
-                fab_help.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showHelpDialog();
-                    }
-                });
-
-                ImageButton fab_settings = dialogView.findViewById(R.id.floatButton_settings);
-                fab_settings.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(BrowserActivity.this, Settings_Activity.class);
-                        startActivity(intent);
-                        bottomSheetDialog.cancel();
-                    }
-                });
-
-                bottomSheetDialog.setContentView(dialogView);
-                bottomSheetDialog.show();
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 searchBox.requestFocus();
