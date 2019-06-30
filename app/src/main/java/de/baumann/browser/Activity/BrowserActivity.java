@@ -80,7 +80,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.mobapphome.mahencryptorlib.MAHEncryptor;
+import com.mobapphome.simpleencryptorlib.SimpleEncryptor;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -221,7 +221,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private BroadcastReceiver downloadReceiver;
 
     private SharedPreferences sp;
-    private MAHEncryptor mahEncryptor;
+    private SimpleEncryptor simpleEncryptor;
     private Javascript javaHosts;
     private Javascript getJavaHosts() {
         return javaHosts;
@@ -371,7 +371,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         sp.edit().putInt("restart_changed", 0).apply();
 
         try {
-            mahEncryptor = MAHEncryptor.newInstance(sp.getString("saved_key", ""));
+            simpleEncryptor = SimpleEncryptor.newInstance(sp.getString("saved_key", ""));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -858,9 +858,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                         try {
 
-                            MAHEncryptor mahEncryptor = MAHEncryptor.newInstance(sp.getString("saved_key", ""));
-                            String encrypted_userName = mahEncryptor.encode(pass_userName.getText().toString().trim());
-                            String encrypted_userPW = mahEncryptor.encode(pass_userPW.getText().toString().trim());
+                            SimpleEncryptor simpleEncryptor = SimpleEncryptor.newInstance(sp.getString("saved_key", ""));
+                            String encrypted_userName = simpleEncryptor.encode(pass_userName.getText().toString().trim());
+                            String encrypted_userPW = simpleEncryptor.encode(pass_userPW.getText().toString().trim());
 
                             Pass db = new Pass(BrowserActivity.this);
                             db.open();
@@ -1807,8 +1807,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                             final EditText pass_userNameET = dialogView.findViewById(R.id.pass_userName);
                             final EditText pass_userPWET = dialogView.findViewById(R.id.pass_userPW);
 
-                            final String decrypted_userName = mahEncryptor.decode(pass_icon);
-                            final String decrypted_userPW = mahEncryptor.decode(pass_attachment);
+                            final String decrypted_userName = simpleEncryptor.decode(pass_icon);
+                            final String decrypted_userPW = simpleEncryptor.decode(pass_attachment);
 
                             pass_titleET.setText(pass_title);
                             pass_userNameET.setText(decrypted_userName);
@@ -1822,8 +1822,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                                     try {
                                         String input_pass_title = pass_titleET.getText().toString().trim();
-                                        String encrypted_userName = mahEncryptor.encode(pass_userNameET.getText().toString().trim());
-                                        String encrypted_userPW = mahEncryptor.encode(pass_userPWET.getText().toString().trim());
+                                        String encrypted_userName = simpleEncryptor.encode(pass_userNameET.getText().toString().trim());
+                                        String encrypted_userPW = simpleEncryptor.encode(pass_userPWET.getText().toString().trim());
 
                                         db.update(Integer.parseInt(_id), HelperUnit.secString(input_pass_title), HelperUnit.secString(pass_content), HelperUnit.secString(encrypted_userName), HelperUnit.secString(encrypted_userPW), String.valueOf(System.currentTimeMillis()));
                                         initPSList(layout);
@@ -2221,8 +2221,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
     private void toast_login (String userName, String passWord) {
         try {
-            final String decrypted_userName = mahEncryptor.decode(userName);
-            final String decrypted_userPW = mahEncryptor.decode(passWord);
+            final String decrypted_userName = simpleEncryptor.decode(userName);
+            final String decrypted_userPW = simpleEncryptor.decode(passWord);
             final ClipboardManager clipboard = (ClipboardManager) BrowserActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
             assert clipboard != null;
 
