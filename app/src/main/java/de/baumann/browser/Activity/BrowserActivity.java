@@ -559,6 +559,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         IntentUnit.setClear(true);
         stopService(toHolderService);
 
+        unregisterReceiver(downloadReceiver);
+
         boolean exit = true;
         if (sp.getBoolean(getString(R.string.sp_clear_quit), false)) {
             Intent toClearService = new Intent(this, ClearService.class);
