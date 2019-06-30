@@ -87,7 +87,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Timer;
@@ -357,10 +356,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             for (int i = 0; i < 25; i++) {
                 char c = chars[random.nextInt(chars.length)];
                 sb.append(c);
-            }
-
-            if (Locale.getDefault().getLanguage().equals("zh")) {
-                sp.edit().putString(getString(R.string.sp_search_engine), "2").apply();
             }
 
             sp.edit().putString("saved_key", sb.toString()).apply();
