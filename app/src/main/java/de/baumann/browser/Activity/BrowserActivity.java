@@ -584,48 +584,10 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             final File pathFile = new File(sp.getString("pdf_path", ""));
 
-            if (sp.getBoolean("pdf_share", false)) {
-
-                if (pathFile.exists() && !sp.getBoolean("pdf_delete", false)) {
-                    sp.edit().putBoolean("pdf_delete", true).commit();
-                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, pathFile.getName());
-                    sharingIntent.putExtra(Intent.EXTRA_TEXT, pathFile.getName());
-                    sharingIntent.setType("*/pdf");
-                    Uri bmpUri = Uri.fromFile(pathFile);
-                    sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                    startActivity(Intent.createChooser(sharingIntent, getString(R.string.menu_share)));
-                } else if (pathFile.exists() && sp.getBoolean("pdf_delete", false)){
-                    pathFile.delete();
-                    sp.edit().putBoolean("pdf_create", false).commit();
-                    sp.edit().putBoolean("pdf_share", false).commit();
-                    sp.edit().putBoolean("pdf_delete", false).commit();
-                } else {
-                    sp.edit().putBoolean("pdf_create", false).commit();
-                    sp.edit().putBoolean("pdf_share", false).commit();
-                    sp.edit().putBoolean("pdf_delete", false).commit();
-
-                    textView.setText(R.string.menu_share_pdfToast);
-                    bottomSheetDialog.show();
-                }
-
-            } else {
-
-                textView.setText(R.string.toast_downloadComplete);
-                bottomSheetDialog.show();
-                sp.edit().putBoolean("pdf_share", false).commit();
-                sp.edit().putBoolean("pdf_create", false).commit();
-                sp.edit().putBoolean("pdf_delete", false).commit();
-            }
-        }
-
-        if (sp.getBoolean("delete_screenshot", false)) {
-            File pathFile = new File(sp.getString("screenshot_path", ""));
-
-            if (pathFile.exists()) {
-                pathFile.delete();
-                sp.edit().putBoolean("delete_screenshot", false).commit();
-            }
+            textView.setText(R.string.toast_downloadComplete);
+            bottomSheetDialog.show();
+            sp.edit().putBoolean("pdf_create", false).commit();
+            sp.edit().putBoolean("pdf_delete", false).commit();
         }
 
         dispatchIntent(getIntent());
@@ -886,7 +848,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             case R.id.tv_save_pdf:
                 bottomSheetDialog.cancel();
-                printPDF(false);
+                printPDF();
                 break;
 
             case R.id.tv_saveBookmark:
@@ -1344,16 +1306,10 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
     // Methods
 
-    private void printPDF (boolean share) {
+    private void printPDF () {
 
         try {
             sp.edit().putBoolean("pdf_create", true).commit();
-
-            if (share) {
-                sp.edit().putBoolean("pdf_share", true).commit();
-            } else {
-                sp.edit().putBoolean("pdf_share", false).commit();
-            }
 
             String title = HelperUnit.fileName(ninjaWebView.getUrl());
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);

@@ -103,50 +103,34 @@ public class ScreenshotTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
-
-        if (result) {
-            dialog.cancel();
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-
-            if (sp.getInt("screenshot",0) == 1) {
-
-                final File pathFile = new File(sp.getString("screenshot_path", ""));
-
-                if (pathFile.exists()) {
-                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                    sharingIntent.setType("image/*");
-                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, title);
-                    sharingIntent.putExtra(Intent.EXTRA_TEXT, path);
-                    Uri bmpUri = Uri.fromFile(pathFile);
-                    sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                    context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.menu_share)));
-                    sp.edit().putBoolean("delete_screenshot", true).apply();
-                }
-            } else {
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity);
-                View dialogView = View.inflate(activity, R.layout.dialog_action, null);
-                TextView textView = dialogView.findViewById(R.id.dialog_text);
-                textView.setText(R.string.toast_downloadComplete);
-                Button action_ok = dialogView.findViewById(R.id.action_ok);
-                action_ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        activity.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
-                        bottomSheetDialog.cancel();
-                    }
-                });
-                Button action_cancel = dialogView.findViewById(R.id.action_cancel);
-                action_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        bottomSheetDialog.cancel();
-                    }
-                });
-                bottomSheetDialog.setContentView(dialogView);
-                bottomSheetDialog.show();
-            }
-        } else {
+        if (!result) {
             NinjaToast.show(activity, context.getString(R.string.toast_error));
+            return;
         }
+
+        dialog.cancel();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity);
+        View dialogView = View.inflate(activity, R.layout.dialog_action, null);
+        TextView textView = dialogView.findViewById(R.id.dialog_text);
+        textView.setText(R.string.toast_downloadComplete);
+        Button action_ok = dialogView.findViewById(R.id.action_ok);
+        action_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+                bottomSheetDialog.cancel();
+            }
+        });
+        Button action_cancel = dialogView.findViewById(R.id.action_cancel);
+        action_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.cancel();
+            }
+        });
+        bottomSheetDialog.setContentView(dialogView);
+        bottomSheetDialog.show();
     }
 }
