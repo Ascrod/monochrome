@@ -80,8 +80,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.mobapphome.simpleencryptorlib.SimpleEncryptor;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -98,7 +96,6 @@ import de.baumann.browser.Browser.BrowserContainer;
 import de.baumann.browser.Browser.BrowserController;
 import de.baumann.browser.Browser.Cookie;
 import de.baumann.browser.Browser.Javascript;
-import de.baumann.browser.Database.Pass;
 import de.baumann.browser.Database.Record;
 import de.baumann.browser.Database.RecordAction;
 import de.baumann.browser.Ninja.R;
@@ -153,7 +150,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private LinearLayout tv_save_pdf;
     private LinearLayout tv_save_file;
     private LinearLayout tv_saveStart;
-    private LinearLayout tv_saveLogin;
 
     private LinearLayout tv2_menu_newTab;
     private LinearLayout tv2_menu_newTab_open;
@@ -220,7 +216,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private BroadcastReceiver downloadReceiver;
 
     private SharedPreferences sp;
-    private SimpleEncryptor simpleEncryptor;
     private Javascript javaHosts;
     private Javascript getJavaHosts() {
         return javaHosts;
@@ -336,40 +331,17 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 start_tab = BrowserUnit.FLAG_HOME;
                 break;
             case "1":
-                start_tab = BrowserUnit.FLAG_HOME;
-                break;
-            case "2":
-                start_tab = BrowserUnit.FLAG_PASS;
-                break;
-            case "3":
                 start_tab = BrowserUnit.FLAG_BOOKMARKS;
                 break;
-            default:
+            case "2":
                 start_tab = BrowserUnit.FLAG_HISTORY;
                 break;
-        }
-
-        if (sp.getString("saved_key_ok", "no").equals("no")) {
-            char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!§$%&/()=?;:_-.,+#*<>".toCharArray();
-            StringBuilder sb = new StringBuilder();
-            Random random = new Random();
-            for (int i = 0; i < 25; i++) {
-                char c = chars[random.nextInt(chars.length)];
-                sb.append(c);
-            }
-
-            sp.edit().putString("saved_key", sb.toString()).apply();
-            sp.edit().putString("saved_key_ok", "yes").apply();
-            sp.edit().putBoolean(getString(R.string.sp_location), false).apply();
+            default:
+                start_tab = BrowserUnit.FLAG_HOME;
+                break;
         }
 
         sp.edit().putInt("restart_changed", 0).apply();
-
-        try {
-            simpleEncryptor = SimpleEncryptor.newInstance(sp.getString("saved_key", ""));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         contentFrame = findViewById(R.id.main_content);
         create = true;
@@ -829,61 +801,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 action.close();
                 break;
 
-            case R.id.tv_saveLogin:
-                bottomSheetDialog.cancel();
-                AlertDialog.Builder builder = new AlertDialog.Builder(BrowserActivity.this);
-                View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_login, null);
-
-                final EditText pass_title = dialogView.findViewById(R.id.pass_title);
-                final EditText pass_userName = dialogView.findViewById(R.id.pass_userName);
-                final EditText pass_userPW = dialogView.findViewById(R.id.pass_userPW);
-
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        pass_title.setText(ninjaWebView.getTitle());
-                        showSoftInput(pass_title);
-                    }
-                }, 100);
-
-                builder.setView(dialogView);
-                builder.setTitle(R.string.menu_edit);
-                builder.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                        String input_pass_title = pass_title.getText().toString().trim();
-
-                        try {
-
-                            SimpleEncryptor simpleEncryptor = SimpleEncryptor.newInstance(sp.getString("saved_key", ""));
-                            String encrypted_userName = simpleEncryptor.encode(pass_userName.getText().toString().trim());
-                            String encrypted_userPW = simpleEncryptor.encode(pass_userPW.getText().toString().trim());
-
-                            Pass db = new Pass(BrowserActivity.this);
-                            db.open();
-                            if (db.isExist(HelperUnit.secString(input_pass_title))){
-                                NinjaToast.show(BrowserActivity.this, R.string.toast_newTitle);
-                            } else {
-                                db.insert(input_pass_title, url, encrypted_userName, HelperUnit.secString(encrypted_userPW), String.valueOf(System.currentTimeMillis()));
-                                NinjaToast.show(BrowserActivity.this, R.string.toast_edit_successful);
-                                hideSoftInput(pass_title);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            NinjaToast.show(BrowserActivity.this, R.string.toast_error);
-                        }
-                    }
-                });
-                builder.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.cancel();
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                break;
-
             case R.id.tv_save_file:
                 bottomSheetDialog.cancel();
                 saveFile(url);
@@ -960,9 +877,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                                 case BrowserUnit.FLAG_HISTORY:
                                     BrowserUnit.clearHistory(BrowserActivity.this);
                                     break;
-                                case BrowserUnit.FLAG_PASS:
-                                    deleteDatabase("pass_DB_v01.db");
-                                    break;
                             }
                         }
                         bottomSheetDialog.cancel();
@@ -1005,7 +919,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_saveBookmark.setVisibility(View.GONE);
                 tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
-                tv_saveLogin.setVisibility(View.GONE);
                 tv_save_file.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.VISIBLE);
@@ -1037,7 +950,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_saveBookmark.setVisibility(View.GONE);
                 tv_save_pdf.setVisibility(View.GONE);
                 tv_saveStart.setVisibility(View.GONE);
-                tv_saveLogin.setVisibility(View.GONE);
                 tv_save_file.setVisibility(View.GONE);
 
                 floatButton_tabView.setVisibility(View.INVISIBLE);
@@ -1069,7 +981,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_saveBookmark.setVisibility(View.VISIBLE);
                 tv_save_pdf.setVisibility(View.VISIBLE);
                 tv_saveStart.setVisibility(View.VISIBLE);
-                tv_saveLogin.setVisibility(View.GONE);
                 tv_save_file.setVisibility(View.VISIBLE);
 
                 tv_relayout.setVisibility(View.GONE);
@@ -1114,23 +1025,15 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                 if (currentAlbumController != null && currentAlbumController instanceof NinjaRelativeLayout) {
                     tv_searchSite.setVisibility(View.GONE);
-                    tv_saveLogin.setVisibility(View.GONE);
                     tv_help.setVisibility(View.VISIBLE);
                     tv_download.setVisibility(View.GONE);
-
-                    if (ninjaRelativeLayout.getFlag() != BrowserUnit.FLAG_PASS) {
-                        tv_relayout.setVisibility(View.VISIBLE);
-                        tv_placeHolder_2.setVisibility(View.GONE);
-                    } else {
-                        tv_relayout.setVisibility(View.GONE);
-                        tv_placeHolder_2.setVisibility(View.VISIBLE);
-                    }
+                    tv_relayout.setVisibility(View.VISIBLE);
+                    tv_placeHolder_2.setVisibility(View.GONE);
                 } else if (currentAlbumController != null && currentAlbumController instanceof NinjaWebView) {
                     tv_searchSite.setVisibility(View.VISIBLE);
                     tv_relayout.setVisibility(View.GONE);
                     tv_placeHolder_2.setVisibility(View.GONE);
                     tv_delete.setVisibility(View.GONE);
-                    tv_saveLogin.setVisibility(View.VISIBLE);
                     tv_help.setVisibility(View.GONE);
                     tv_download.setVisibility(View.VISIBLE);
                 }
@@ -1283,8 +1186,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             addAlbum(BrowserUnit.FLAG_HISTORY);
         } else if ("sc_bookmark".equals(action)) {
             addAlbum(BrowserUnit.FLAG_BOOKMARKS);
-        } else if ("sc_login".equals(action)) {
-            addAlbum(BrowserUnit.FLAG_PASS);
         } else if ("sc_startPage".equals(action)) {
             addAlbum(BrowserUnit.FLAG_HOME);
         } else if (Intent.ACTION_SEND.equals(action)) {
@@ -1509,11 +1410,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         final GridView gridView = layout.findViewById(R.id.home_grid);
         final ListView home_list = layout.findViewById(R.id.home_list);
         final View open_newTabView = layout.findViewById(R.id.open_newTabView);
-        final View open_passView = layout.findViewById(R.id.open_passView);
         final View open_bookmarkView = layout.findViewById(R.id.open_bookmarkView);
         final View open_historyView = layout.findViewById(R.id.open_historyView);
 
-        ImageButton open_pass = layout.findViewById(R.id.open_pass);
         ImageButton open_newTab = layout.findViewById(R.id.open_newTab);
         ImageButton open_bookmark = layout.findViewById(R.id.open_bookmark);
         ImageButton open_history = layout.findViewById(R.id.open_history);
@@ -1521,7 +1420,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (current_tab == BrowserUnit.FLAG_HOME) {
 
             open_newTabView.setVisibility(View.VISIBLE);
-            open_passView.setVisibility(View.INVISIBLE);
             open_bookmarkView.setVisibility(View.INVISIBLE);
             open_historyView.setVisibility(View.INVISIBLE);
 
@@ -1560,7 +1458,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             switch (current_tab) {
                 case BrowserUnit.FLAG_BOOKMARKS:
                     open_newTabView.setVisibility(View.INVISIBLE);
-                    open_passView.setVisibility(View.INVISIBLE);
                     open_bookmarkView.setVisibility(View.VISIBLE);
                     open_historyView.setVisibility(View.INVISIBLE);
                     layout.setAlbumTitle(getString(R.string.album_title_bookmarks));
@@ -1569,33 +1466,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     break;
                 case BrowserUnit.FLAG_HISTORY:
                     open_newTabView.setVisibility(View.INVISIBLE);
-                    open_passView.setVisibility(View.INVISIBLE);
                     open_bookmarkView.setVisibility(View.INVISIBLE);
                     open_historyView.setVisibility(View.VISIBLE);
                     layout.setAlbumTitle(getString(R.string.album_title_history));
                     layout.setFlag(BrowserUnit.FLAG_HISTORY);
                     initBHList(layout);
                     break;
-                case BrowserUnit.FLAG_PASS:
-                    open_newTabView.setVisibility(View.INVISIBLE);
-                    open_passView.setVisibility(View.VISIBLE);
-                    open_bookmarkView.setVisibility(View.INVISIBLE);
-                    open_historyView.setVisibility(View.INVISIBLE);
-                    layout.setAlbumTitle(getString(R.string.album_title_pass));
-                    layout.setFlag(BrowserUnit.FLAG_PASS);
-                    initPSList(layout);
-                    break;
             }
         }
-
-        open_pass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layout.setFlag(BrowserUnit.FLAG_PASS);
-                layout.setAlbumTitle(getString(R.string.album_title_pass));
-                initHomeGrid(layout);
-            }
-        });
 
         open_newTab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1747,186 +1625,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 return true;
             }
         });
-    }
-
-    private void initPSList(final NinjaRelativeLayout layout) {
-
-        final Pass db = new Pass(this);
-        db.open();
-
-        final int layoutstyle = R.layout.list_item;
-        int[] xml_id = new int[] {
-                R.id.record_item_title,
-                R.id.record_item_url,
-        };
-        String[] column = new String[] {
-                "pass_title",
-                "pass_content",
-        };
-
-        final Cursor row = db.fetchAllData();
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, layoutstyle,row,column, xml_id, 0);
-
-        listView = layout.findViewById(R.id.home_list);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterview, View view, int position, long id) {
-                final String pass_content = row.getString(row.getColumnIndexOrThrow("pass_content"));
-                final String pass_icon = row.getString(row.getColumnIndexOrThrow("pass_icon"));
-                final String pass_attachment = row.getString(row.getColumnIndexOrThrow("pass_attachment"));
-                updateAlbum(pass_content);
-                toast_login (pass_icon, pass_attachment);
-            }
-        });
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Cursor row = (Cursor) listView.getItemAtPosition(position);
-                final String _id = row.getString(row.getColumnIndexOrThrow("_id"));
-                final String pass_title = row.getString(row.getColumnIndexOrThrow("pass_title"));
-                final String pass_content = row.getString(row.getColumnIndexOrThrow("pass_content"));
-                final String pass_icon = row.getString(row.getColumnIndexOrThrow("pass_icon"));
-                final String pass_attachment = row.getString(row.getColumnIndexOrThrow("pass_attachment"));
-
-                bottomSheetDialog = new BottomSheetDialog(BrowserActivity.this);
-                View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_menu_context, null);
-
-                tv2_menu_newTab = dialogView.findViewById(R.id.tv2_menu_newTab);
-                tv2_menu_newTab.setVisibility(View.VISIBLE);
-                tv2_menu_newTab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.cancel();
-                        addAlbum(getString(R.string.album_untitled), pass_content, false, null);
-                        NinjaToast.show(BrowserActivity.this, getString(R.string.toast_new_tab_successful));
-                        toast_login (pass_icon, pass_attachment);
-                    }
-                });
-
-                tv2_menu_newTab_open = dialogView.findViewById(R.id.tv2_menu_newTab_open);
-                tv2_menu_newTab_open.setVisibility(View.VISIBLE);
-                tv2_menu_newTab_open.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.cancel();
-                        pinAlbums(pass_content);
-                        toast_login (pass_icon, pass_attachment);
-                    }
-                });
-
-                tv2_menu_notification = dialogView.findViewById(R.id.tv2_menu_notification);
-                tv2_menu_notification.setVisibility(View.VISIBLE);
-                tv2_menu_notification.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.cancel();
-                        toast_login (pass_icon, pass_attachment);
-                    }
-                });
-
-                tv2_menu_edit = dialogView.findViewById(R.id.tv2_menu_edit);
-                tv2_menu_edit.setVisibility(View.VISIBLE);
-                tv2_menu_edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.cancel();
-                        try {
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(BrowserActivity.this);
-                            View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_login, null);
-
-                            final EditText pass_titleET = dialogView.findViewById(R.id.pass_title);
-                            final EditText pass_userNameET = dialogView.findViewById(R.id.pass_userName);
-                            final EditText pass_userPWET = dialogView.findViewById(R.id.pass_userPW);
-
-                            final String decrypted_userName = simpleEncryptor.decode(pass_icon);
-                            final String decrypted_userPW = simpleEncryptor.decode(pass_attachment);
-
-                            pass_titleET.setText(pass_title);
-                            pass_userNameET.setText(decrypted_userName);
-                            pass_userPWET.setText(decrypted_userPW);
-
-                            builder.setView(dialogView);
-                            builder.setTitle(R.string.menu_edit);
-                            builder.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int whichButton) {
-
-                                    try {
-                                        String input_pass_title = pass_titleET.getText().toString().trim();
-                                        String encrypted_userName = simpleEncryptor.encode(pass_userNameET.getText().toString().trim());
-                                        String encrypted_userPW = simpleEncryptor.encode(pass_userPWET.getText().toString().trim());
-
-                                        db.update(Integer.parseInt(_id), HelperUnit.secString(input_pass_title), HelperUnit.secString(pass_content), HelperUnit.secString(encrypted_userName), HelperUnit.secString(encrypted_userPW), String.valueOf(System.currentTimeMillis()));
-                                        initPSList(layout);
-                                        hideSoftInput(pass_titleET);
-                                        NinjaToast.show(BrowserActivity.this, R.string.toast_edit_successful);
-
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                        NinjaToast.show(BrowserActivity.this, R.string.toast_error);
-                                    }
-                                }
-                            });
-                            builder.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    dialog.cancel();
-                                    hideSoftInput(pass_titleET);
-                                }
-                            });
-
-                            final AlertDialog dialog = builder.create();
-                            dialog.show();
-                            showSoftInput(pass_titleET);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            NinjaToast.show(BrowserActivity.this, R.string.toast_error);
-                        }
-                    }
-                });
-
-                tv2_menu_delete = dialogView.findViewById(R.id.tv2_menu_delete);
-                tv2_menu_delete.setVisibility(View.VISIBLE);
-                tv2_menu_delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        bottomSheetDialog.cancel();
-                        bottomSheetDialog = new BottomSheetDialog(BrowserActivity.this);
-                        View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_action, null);
-                        TextView textView = dialogView.findViewById(R.id.dialog_text);
-                        textView.setText(R.string.toast_titleConfirm_delete);
-                        Button action_ok = dialogView.findViewById(R.id.action_ok);
-                        action_ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                db.delete(Integer.parseInt(_id));
-                                initPSList(layout);
-                                bottomSheetDialog.cancel();
-                            }
-                        });
-                        Button action_cancel = dialogView.findViewById(R.id.action_cancel);
-                        action_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                bottomSheetDialog.cancel();
-                            }
-                        });
-                        bottomSheetDialog.setContentView(dialogView);
-                        bottomSheetDialog.show();
-                    }
-                });
-
-                bottomSheetDialog.setContentView(dialogView);
-                bottomSheetDialog.show();
-                return true;
-            }
-        });
-
     }
 
     private void showSwitcher () {
@@ -2252,84 +1950,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         bottomSheetDialog.setContentView(dialogView);
         bottomSheetDialog.show();
-    }
-
-    private void toast_login (String userName, String passWord) {
-        try {
-            final String decrypted_userName = simpleEncryptor.decode(userName);
-            final String decrypted_userPW = simpleEncryptor.decode(passWord);
-            final ClipboardManager clipboard = (ClipboardManager) BrowserActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
-            assert clipboard != null;
-
-            final BroadcastReceiver unCopy = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    ClipData clip = ClipData.newPlainText("text", decrypted_userName);
-                    clipboard.setPrimaryClip(clip);
-                    NinjaToast.show(BrowserActivity.this, R.string.toast_copy_successful);
-                }
-            };
-
-            final BroadcastReceiver pwCopy = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    ClipData clip = ClipData.newPlainText("text", decrypted_userPW);
-                    clipboard.setPrimaryClip(clip);
-                    NinjaToast.show(BrowserActivity.this, R.string.toast_copy_successful);
-                }
-            };
-
-            IntentFilter intentFilter = new IntentFilter("unCopy");
-            BrowserActivity.this.registerReceiver(unCopy, intentFilter);
-            Intent copy = new Intent("unCopy");
-            PendingIntent copyUN = PendingIntent.getBroadcast(BrowserActivity.this, 0, copy, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            IntentFilter intentFilter2 = new IntentFilter("pwCopy");
-            BrowserActivity.this.registerReceiver(pwCopy, intentFilter2);
-            Intent copy2 = new Intent("pwCopy");
-            PendingIntent copyPW = PendingIntent.getBroadcast(BrowserActivity.this, 1, copy2, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            NotificationCompat.Builder builder;
-
-            NotificationManager mNotificationManager = (NotificationManager) BrowserActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
-            assert mNotificationManager != null;
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                String CHANNEL_ID = "browser_not";// The id of the channel.
-                CharSequence name = BrowserActivity.this.getString(R.string.app_name);// The user-visible name of the channel.
-                NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_HIGH);
-                mNotificationManager.createNotificationChannel(mChannel);
-                builder = new NotificationCompat.Builder(BrowserActivity.this, CHANNEL_ID);
-            } else {
-                //noinspection deprecation
-                builder = new NotificationCompat.Builder(BrowserActivity.this);
-            }
-
-            NotificationCompat.Action action_UN = new NotificationCompat.Action.Builder(R.drawable.icon_earth, getString(R.string.toast_titleConfirm_pasteUN), copyUN).build();
-            NotificationCompat.Action action_PW = new NotificationCompat.Action.Builder(R.drawable.icon_earth, getString(R.string.toast_titleConfirm_pastePW), copyPW).build();
-
-            @SuppressWarnings("deprecation")
-            Notification n  = builder
-                    .setCategory(Notification.CATEGORY_MESSAGE)
-                    .setSmallIcon(R.drawable.ic_notification_ninja)
-                    .setContentTitle(BrowserActivity.this.getString(R.string.app_name))
-                    .setContentText(BrowserActivity.this.getString(R.string.toast_titleConfirm_paste))
-                    .setColor(ContextCompat.getColor(BrowserActivity.this,R.color.colorAccent))
-                    .setAutoCancel(true)
-                    .setPriority(Notification.PRIORITY_HIGH)
-                    .setVibrate(new long[0])
-                    .addAction(action_UN)
-                    .addAction(action_PW)
-                    .build();
-
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            assert notificationManager != null;
-            notificationManager.notify(0, n);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            NinjaToast.show(BrowserActivity.this, R.string.toast_error);
-        }
     }
 
     private synchronized void addAlbum(int flag) {
@@ -3061,8 +2681,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         tv_save_pdf.setOnClickListener(BrowserActivity.this);
         tv_saveStart = dialogView.findViewById(R.id.tv_saveStart);
         tv_saveStart.setOnClickListener(BrowserActivity.this);
-        tv_saveLogin = dialogView.findViewById(R.id.tv_saveLogin);
-        tv_saveLogin.setOnClickListener(BrowserActivity.this);
         tv_save_file = dialogView.findViewById(R.id.tv_save_file);
         tv_save_file.setOnClickListener(BrowserActivity.this);
 

@@ -18,6 +18,3 @@ https://github.com/Templarian/MaterialDesign
 
 "Ninja"
 https://github.com/mthli/Ninja
-
-"MAH Encryptor Lib"
-https://github.com/hummatli/MAHEncryptorLib

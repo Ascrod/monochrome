@@ -311,8 +311,6 @@ public class NinjaWebViewClient extends WebViewClient {
 
         final EditText pass_userNameET = dialogView.findViewById(R.id.pass_userName);
         final EditText pass_userPWET = dialogView.findViewById(R.id.pass_userPW);
-        TextInputLayout login_title = dialogView.findViewById(R.id.login_title);
-        login_title.setVisibility(View.GONE);
 
         builder.setView(dialogView);
         builder.setTitle(R.string.dialog_title_sign_in);
