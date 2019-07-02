@@ -2965,13 +2965,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private void showEditDialog(final Adapter_Record adapterRecord, List<Record> recordList, int location) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_edit, null);
+        View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_edit_bookmark, null);
 
         final Record record = recordList.get(location);
-        final EditText editText = dialogView.findViewById(R.id.dialog_edit);
+        final EditText editTitle = dialogView.findViewById(R.id.dialog_edit_title);
+        final EditText editUrl = dialogView.findViewById(R.id.dialog_edit_url);
 
-        editText.setHint(R.string.dialog_title_hint);
-        editText.setText(record.getTitle());
+        editTitle.setHint(R.string.dialog_title_hint);
+        editTitle.setText(record.getTitle());
+        editUrl.setHint(R.string.dialog_url_hint);
+        editUrl.setText(record.getURL());
 
         builder.setView(dialogView);
         builder.setTitle(R.string.menu_edit);
@@ -2979,32 +2982,34 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                String text = editText.getText().toString().trim();
-                if (text.isEmpty()) {
+                String title = editTitle.getText().toString().trim();
+                String url = editUrl.getText().toString().trim();
+                if (title.isEmpty() || url.isEmpty()) {
                     NinjaToast.show(BrowserActivity.this, getString(R.string.toast_input_empty));
                 }
 
                 RecordAction action = new RecordAction(BrowserActivity.this);
                 action.open(true);
-                record.setTitle(text);
+                record.setTitle(title);
+                record.setURL(url);
                 action.updateBookmark(record);
                 action.close();
 
                 adapterRecord.notifyDataSetChanged();
-                hideSoftInput(editText);
+                hideSoftInput(editTitle);
             }
         });
         builder.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.cancel();
-                hideSoftInput(editText);
+                hideSoftInput(editTitle);
             }
         });
 
         AlertDialog dialog = builder.create();
         dialog.show();
-        showSoftInput(editText);
+        showSoftInput(editTitle);
     }
 
     private void setCustomFullscreen(boolean fullscreen) {
