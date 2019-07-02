@@ -139,7 +139,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private LinearLayout tv_relayout;
     private LinearLayout tv_searchSite;
     private LinearLayout tv_settings;
-    private LinearLayout tv_help;
     private LinearLayout tv_download;
     private LinearLayout tv_placeHolder;
     private LinearLayout tv_placeHolder_2;
@@ -895,11 +894,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                 break;
 
-            case R.id.tv_help:
-                bottomSheetDialog.cancel();
-                showHelpDialog();
-                break;
-
             case R.id.tv_download:
                 bottomSheetDialog.cancel();
                 startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
@@ -932,7 +926,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_placeHolder_2.setVisibility(View.GONE);
                 tv_settings.setVisibility(View.GONE);
                 tv_delete.setVisibility(View.GONE);
-                tv_help.setVisibility(View.GONE);
                 tv_download.setVisibility(View.GONE);
                 break;
 
@@ -963,7 +956,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_placeHolder_2.setVisibility(View.GONE);
                 tv_settings.setVisibility(View.GONE);
                 tv_delete.setVisibility(View.GONE);
-                tv_help.setVisibility(View.GONE);
                 tv_download.setVisibility(View.GONE);
                 break;
 
@@ -995,7 +987,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 tv_placeHolder_2.setVisibility(View.GONE);
                 tv_settings.setVisibility(View.GONE);
                 tv_delete.setVisibility(View.GONE);
-                tv_help.setVisibility(View.GONE);
                 tv_download.setVisibility(View.GONE);
                 break;
 
@@ -1025,7 +1016,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                 if (currentAlbumController != null && currentAlbumController instanceof NinjaRelativeLayout) {
                     tv_searchSite.setVisibility(View.GONE);
-                    tv_help.setVisibility(View.VISIBLE);
                     tv_download.setVisibility(View.GONE);
                     tv_relayout.setVisibility(View.VISIBLE);
                     tv_placeHolder_2.setVisibility(View.GONE);
@@ -1034,7 +1024,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     tv_relayout.setVisibility(View.GONE);
                     tv_placeHolder_2.setVisibility(View.GONE);
                     tv_delete.setVisibility(View.GONE);
-                    tv_help.setVisibility(View.GONE);
                     tv_download.setVisibility(View.VISIBLE);
                 }
 
@@ -2692,8 +2681,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         tv_settings.setOnClickListener(BrowserActivity.this);
         tv_delete = dialogView.findViewById(R.id.tv_delete);
         tv_delete.setOnClickListener(BrowserActivity.this);
-        tv_help = dialogView.findViewById(R.id.tv_help);
-        tv_help.setOnClickListener(BrowserActivity.this);
         tv_download = dialogView.findViewById(R.id.tv_download);
         tv_download.setOnClickListener(BrowserActivity.this);
         tv_placeHolder = dialogView.findViewById(R.id.tv_placeholder);
@@ -2867,54 +2854,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 }
             });
         }
-
-        bottomSheetDialog.setContentView(dialogView);
-        bottomSheetDialog.show();
-    }
-
-    private void showHelpDialog () {
-
-        bottomSheetDialog = new BottomSheetDialog(BrowserActivity.this);
-        View dialogView = View.inflate(BrowserActivity.this, R.layout.dialog_help, null);
-
-        ImageView help_logo = dialogView.findViewById(R.id.cardView_help_logo);
-        ImageView help_tabs = dialogView.findViewById(R.id.cardView_help_tabs);
-        ImageView help_not = dialogView.findViewById(R.id.cardView_help_not);
-        ImageView help_nav = dialogView.findViewById(R.id.cardView_help_nav);
-        ImageView help_set = dialogView.findViewById(R.id.cardView_help_set);
-        ImageView help_start = dialogView.findViewById(R.id.cardView_help_startpage);
-        ImageView help_menu = dialogView.findViewById(R.id.cardView_help_menu);
-        ImageView help_fastToggle = dialogView.findViewById(R.id.cardView_help_fastToggle);
-
-        help_logo.setImageResource(R.drawable.help_toolbar);
-        help_tabs.setImageResource(R.drawable.help_tabs);
-        help_not.setImageResource(R.drawable.help_not);
-        help_nav.setImageResource(R.drawable.help_nav);
-        help_set.setImageResource(R.drawable.help_settings);
-        help_start.setImageResource(R.drawable.help_start);
-        help_menu.setImageResource(R.drawable.help_menu);
-        help_fastToggle.setImageResource(R.drawable.help_toggle);
-
-        TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
-        dialog_title.setText(getString(R.string.menu_other_help));
-
-        ImageButton fab = dialogView.findViewById(R.id.floatButton_ok);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.cancel();
-            }
-        });
-
-        ImageButton fab_settings = dialogView.findViewById(R.id.floatButton_settings);
-        fab_settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BrowserActivity.this, Settings_Activity.class);
-                startActivity(intent);
-                bottomSheetDialog.cancel();
-            }
-        });
 
         bottomSheetDialog.setContentView(dialogView);
         bottomSheetDialog.show();

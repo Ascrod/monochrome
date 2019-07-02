@@ -126,9 +126,6 @@ public class Fragment_settings extends PreferenceFragment implements SharedPrefe
             }
         });
 
-        ImageButton fab_help = dialogView.findViewById(R.id.floatButton_help);
-        fab_help.setVisibility(View.GONE);
-
         ImageButton fab_settings = dialogView.findViewById(R.id.floatButton_settings);
         fab_settings.setVisibility(View.GONE);
 
@@ -155,9 +152,6 @@ public class Fragment_settings extends PreferenceFragment implements SharedPrefe
                 dialog.cancel();
             }
         });
-
-        ImageButton fab_help = dialogView.findViewById(R.id.floatButton_help);
-        fab_help.setVisibility(View.GONE);
 
         ImageButton fab_settings = dialogView.findViewById(R.id.floatButton_settings);
         fab_settings.setVisibility(View.GONE);

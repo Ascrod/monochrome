@@ -17,40 +17,7 @@
         \u25AA new: adaptive icon
     </string>
 
-    <string name="startpage_title">Startpage</string>
-    <string name="startpage_dialog">Here you can access all your data: saved sites on the startpage, bookmarks, history, saved
-        login data and the integrated file browser. In the settings you can decide which content will be shown at start.</string>
-
-    <string name="fastToggle_title">Fast toggle</string>
-    <string name="fastToggle_dialog">If you long press the \"menu\" or the \"Navigation button\" the \"Fast toggle dialog\"
-        will open. Here you can change some important settings without leaving the current website. You can also add websites
-        to your whitelist for AdBlocker, JavaScript or Cookies..</string>
-
     <string name="toolbar_title">Toolbar</string>
-    <string name="toolbar_dialog">At the bottom of the screen you have the toolbar. You can enter URLs or search for
-        something, reload the website and open the menu. Long click on the \"menu button\" to open the \"Fast toggle menu\".
-        Swipe the toolbar up to open the tab preview. To switch between tabs swipe left or right.</string>
-
-    <string name="tab_title">Tab preview</string>
-    <string name="tab_dialog">Click the preview of a tab to select it, click again to close the tab preview. To close a tab simply
-        swipe to preview to the top or bottom.</string>
-
-    <string name="menu_title">Menu</string>
-    <string name="menu_dialog">Manage your tabs, share or save content, handle the current tab or use some features: just try it.
-        The menu can be dismissed, like all other notifications, by clicking back, clicking outside the menu or simply be
-        swiping the menu down.</string>
-
-    <string name="not_title">Notifications</string>
-    <string name="not_dialog">Notifications are displayed on the bottom of the screen. They can also be dismissed like the
-        menus.</string>
-
-    <string name="nav_title">Navigation</string>
-    <string name="nav_dialog">Use the \"Navigation Button\": swipe up/down -> scroll to top/bottom;
-    swipe left/right -> navigate back/forward; click -> open the menu; long click -> open \"Fast toggle dialog\";
-        double click -> Hide the \"Navigation Button\".</string>
-
-    <string name="settings_dialog">There are even more options in the settings. Try it out!</string>
-
 
     <string name="license_title">Copyright © 2017  by Gaukler Faun</string>
     <string name="license_dialog">
