@@ -10,16 +10,22 @@
     android:background="?android:attr/colorBackground"
     tools:ignore="ContentDescription" >
 
-    <TextView
-        android:id="@+id/dialog_title"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
-        android:ellipsize="end"
-        android:gravity="center_vertical|center_horizontal"
-        android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
+        android:scrollbars="none" >
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:ellipsize="none"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:singleLine="true" />
+    </HorizontalScrollView>
 
     <View
         android:layout_margin="8dp"
