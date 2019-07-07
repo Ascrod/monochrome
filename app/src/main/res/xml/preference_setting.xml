@@ -65,16 +65,6 @@
     <PreferenceCategory android:title="@string/setting_title_about">
 
         <Preference
-            android:icon="@drawable/icon_list"
-            android:title="@string/changelog_title"
-            android:summary="@string/setting_summary_changelog"/>
-
-        <Preference
-            android:icon="@drawable/icon_group"
-            android:title="@string/setting_title_community"
-            android:summary="@string/setting_summary_community"/>
-
-        <Preference
             android:icon="@drawable/icon_copyright"
             android:title="@string/setting_title_license"
             android:summary="@string/setting_summary_license"/>

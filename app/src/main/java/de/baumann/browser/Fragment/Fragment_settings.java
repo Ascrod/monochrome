@@ -81,12 +81,6 @@ public class Fragment_settings extends PreferenceFragment implements SharedPrefe
             case R.string.setting_title_license:
                 showLicenseDialog(getString(R.string.license_title), getString(R.string.license_dialog));
                 break;
-            case R.string.setting_title_community:
-                showLicenseDialog(getString(R.string.setting_title_community), getString(R.string.cont_dialog));
-                break;
-            case R.string.changelog_title:
-                showChangelogDialog();
-                break;
             case R.string.setting_title_appSettings:
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -116,33 +110,6 @@ public class Fragment_settings extends PreferenceFragment implements SharedPrefe
 
         TextView dialog_text = dialogView.findViewById(R.id.dialog_text);
         dialog_text.setText(HelperUnit.textSpannable(text));
-        dialog_text.setMovementMethod(LinkMovementMethod.getInstance());
-
-        ImageButton fab = dialogView.findViewById(R.id.floatButton_ok);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-
-        ImageButton fab_settings = dialogView.findViewById(R.id.floatButton_settings);
-        fab_settings.setVisibility(View.GONE);
-
-        dialog.setContentView(dialogView);
-        dialog.show();
-    }
-
-    private void showChangelogDialog() {
-
-        final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
-        View dialogView = View.inflate(getActivity(), R.layout.dialog_text, null);
-
-        TextView dialog_title = dialogView.findViewById(R.id.dialog_title);
-        dialog_title.setText(R.string.changelog_title);
-
-        TextView dialog_text = dialogView.findViewById(R.id.dialog_text);
-        dialog_text.setText(HelperUnit.textSpannable(getString(R.string.changelog_dialog)));
         dialog_text.setMovementMethod(LinkMovementMethod.getInstance());
 
         ImageButton fab = dialogView.findViewById(R.id.floatButton_ok);

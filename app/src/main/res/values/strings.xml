@@ -226,10 +226,6 @@
     <string name="setting_title_appSettings">App settings</string>
     <string name="setting_summary_appSettings">Open the system app settings for \"FOSS Browser\". There you can,
         depending on your Android version grant permissions, clear the app data and so on.</string>
-    <string name="setting_title_community">Contributing</string>
-    <string name="setting_summary_community">See who contributed something to this project. Or do you want to help with further
-        development, report an issue or just get the latest news relating to my projects?</string>
-    <string name="setting_summary_changelog">Show the latest changelog to see what\'s new.</string>
 
     <!-- Toast -->
     <string name="toast_add_bookmark_successful">Bookmark Successfully Added</string>
