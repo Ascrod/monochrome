@@ -3,7 +3,7 @@
 <resources>
 
     <!-- App -->
-    <string name="app_name">FOSS Browser</string>
+    <string name="app_name">Monochrome</string>
     <string name="app_ok">OK</string>
     <string name="app_cancel">Cancel</string>
     <string name="app_close">Close</string>
@@ -222,7 +222,7 @@
     <!-- About -->
     <string name="setting_title_about">About</string>
     <string name="setting_title_license">License</string>
-    <string name="setting_summary_license">\"FOSS Browser\" is completely free (as in freedom) and open source.</string>
+    <string name="setting_summary_license">Monochrome is completely free (as in freedom) and open source.</string>
     <string name="setting_title_appSettings">App settings</string>
     <string name="setting_summary_appSettings">Open the system app settings.</string>
 

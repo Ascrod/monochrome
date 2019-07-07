@@ -4,9 +4,9 @@
 
     <string name="toolbar_title">Toolbar</string>
 
-    <string name="license_title">Copyright © 2017  by Gaukler Faun</string>
+    <string name="license_title">Copyright © 2019  by Ascrod</string>
     <string name="license_dialog">
-        &lt;i>For more information visit the project site on Github: https://github.com/scoute-dich/Browser&lt;/i>&lt;br>&lt;br>
+        &lt;i>For more information visit the project site on Github: https://github.com/ascrod/monochrome&lt;/i>&lt;br>&lt;br>
 
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
