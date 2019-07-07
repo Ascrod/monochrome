@@ -31,8 +31,11 @@
         &lt;b>Ninja&lt;/b>&lt;br>
         Apache License Version 2.0&lt;br>
         Matthew Lee&lt;br>
-        &lt;i>https://github.com/mthli/Ninja</string>
+        &lt;i>https://github.com/mthli/Ninja&lt;/i>&lt;br>&lt;br>
 
-
+        &lt;b>FOSS Browser&lt;/b>&lt;br>
+        GNU General Public License Version 3&lt;br>
+        Gaukler Faun&lt;br>
+        &lt;i>https://github.com/scoute-dich/browser</string>
 
 </resources>

@@ -18,3 +18,6 @@ https://github.com/Templarian/MaterialDesign
 
 "Ninja"
 https://github.com/mthli/Ninja
+
+"FOSS Browser"
+https://github.com/scoute-dich/browser
