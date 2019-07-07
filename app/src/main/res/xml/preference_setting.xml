@@ -6,7 +6,7 @@
 
         <Preference android:title="@string/setting_title_start_control"
             android:summary="@string/setting_summary_start_control"
-            android:icon="@drawable/icon_earth"/>
+            android:icon="@drawable/icon_home"/>
 
         <Preference android:title="@string/setting_title_clear_control"
             android:icon="@drawable/icon_delete"

@@ -86,7 +86,7 @@
                         android:background="?attr/actionBarItemBackground"
                         android:contentDescription="@null"
                         android:foregroundGravity="center"
-                        android:src="@drawable/icon_earth" />
+                        android:src="@drawable/icon_home" />
 
                 </LinearLayout>
 
