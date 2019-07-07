@@ -1171,12 +1171,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             pinAlbums(intent.getStringExtra(SearchManager.QUERY));
         } else if (filePathCallback != null) {
             filePathCallback = null;
-        } else if ("sc_history".equals(action)) {
-            addAlbum(BrowserUnit.FLAG_HISTORY);
-        } else if ("sc_bookmark".equals(action)) {
-            addAlbum(BrowserUnit.FLAG_BOOKMARKS);
-        } else if ("sc_startPage".equals(action)) {
-            addAlbum(BrowserUnit.FLAG_HOME);
         } else if (Intent.ACTION_SEND.equals(action)) {
             pinAlbums(intent.getStringExtra(Intent.EXTRA_TEXT));
         } else {
