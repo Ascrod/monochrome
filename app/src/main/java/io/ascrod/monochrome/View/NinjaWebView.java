@@ -27,7 +27,6 @@ import io.ascrod.monochrome.Unit.IntentUnit;
 import io.ascrod.monochrome.Unit.ViewUnit;
 
 import java.net.URISyntaxException;
-import java.util.HashMap;
 
 public class NinjaWebView extends WebView implements AlbumController {
 

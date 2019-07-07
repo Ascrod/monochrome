@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.design.widget.BottomSheetDialog;
@@ -17,8 +16,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.io.File;
 
 import io.ascrod.monochrome.Unit.HelperUnit;
 import io.ascrod.monochrome.Ninja.R;

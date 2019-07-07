@@ -15,7 +15,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;

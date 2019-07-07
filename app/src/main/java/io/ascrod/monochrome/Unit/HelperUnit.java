@@ -30,7 +30,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.TextUtils;
