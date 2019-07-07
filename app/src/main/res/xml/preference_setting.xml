@@ -12,7 +12,7 @@
             android:icon="@drawable/icon_delete"
             android:summary="@string/setting_summary_clear_control" />
 
-        <de.baumann.browser.View.SearchEngineListPreference
+        <io.ascrod.monochrome.View.SearchEngineListPreference
             android:icon="@drawable/icon_search"
             android:key="@string/sp_search_engine"
             android:defaultValue="0"
@@ -21,7 +21,7 @@
             android:entries="@array/setting_entries_search_engine"
             android:entryValues="@array/setting_values_search_engine"/>
 
-        <de.baumann.browser.View.UserAgentListPreference
+        <io.ascrod.monochrome.View.UserAgentListPreference
             android:icon="@drawable/icon_desktop"
             android:key="@string/sp_user_agent"
             android:defaultValue="0"

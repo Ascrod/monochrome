@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="de.baumann.browser.Ninja">
+          package="io.ascrod.monochrome.Ninja">
 
 
     <!-- Permission -->
@@ -23,7 +23,7 @@
         android:fullBackupContent="@xml/backup_descriptor">
 
         <!-- Holder -->
-        <activity android:name="de.baumann.browser.Activity.HolderActivity"
+        <activity android:name="io.ascrod.monochrome.Activity.HolderActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTask"
                   android:theme="@android:style/Theme.Translucent.NoTitleBar">
@@ -36,12 +36,12 @@
             </intent-filter>
         </activity>
 
-        <service android:name="de.baumann.browser.Service.HolderService"
+        <service android:name="io.ascrod.monochrome.Service.HolderService"
                  android:label="@string/app_name"
                  android:icon="@mipmap/ic_launcher"/>
 
         <!-- BrowserActivity -->
-        <activity android:name="de.baumann.browser.Activity.BrowserActivity"
+        <activity android:name="io.ascrod.monochrome.Activity.BrowserActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance"
                   android:configChanges="orientation|keyboardHidden|screenSize"
@@ -66,48 +66,48 @@
         </activity>
 
         <!-- Settings -->
-        <activity android:name="de.baumann.browser.Activity.Settings_Activity"
+        <activity android:name="io.ascrod.monochrome.Activity.Settings_Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:label="@string/setting_label"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name="de.baumann.browser.Activity.Whitelist_AdBlock"
+        <activity android:name="io.ascrod.monochrome.Activity.Whitelist_AdBlock"
             android:label="@string/setting_title_whitelist"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name="de.baumann.browser.Activity.Whitelist_Javascript"
+        <activity android:name="io.ascrod.monochrome.Activity.Whitelist_Javascript"
             android:label="@string/setting_title_whitelistJS"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name="de.baumann.browser.Activity.Whitelist_Cookie"
+        <activity android:name="io.ascrod.monochrome.Activity.Whitelist_Cookie"
             android:label="@string/setting_title_whitelistCookie"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name="de.baumann.browser.Activity.Settings_ClearActivity"
+        <activity android:name="io.ascrod.monochrome.Activity.Settings_ClearActivity"
             android:label="@string/setting_title_clear_control"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name="de.baumann.browser.Activity.Settings_StartActivity"
+        <activity android:name="io.ascrod.monochrome.Activity.Settings_StartActivity"
             android:label="@string/setting_title_start_control"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name="de.baumann.browser.Activity.Settings_DataActivity"
+        <activity android:name="io.ascrod.monochrome.Activity.Settings_DataActivity"
             android:label="@string/setting_title_data"
             android:theme="@style/AppTheme"/>
 
-        <activity android:name="de.baumann.browser.Activity.Settings_UIActivity"
+        <activity android:name="io.ascrod.monochrome.Activity.Settings_UIActivity"
             android:label="@string/setting_title_ui"
             android:theme="@style/AppTheme"/>
 
         <!-- ClearService | Provider-->
-        <service android:name="de.baumann.browser.Service.ClearService"
+        <service android:name="io.ascrod.monochrome.Service.ClearService"
                  android:label="@string/app_name"
                  android:icon="@mipmap/ic_launcher"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="de.baumann.browser.provider"
+            android:authorities="io.ascrod.monochrome.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

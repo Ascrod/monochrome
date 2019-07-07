@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<de.baumann.browser.View.NinjaRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.ascrod.monochrome.View.NinjaRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -148,4 +148,4 @@
 
     </android.support.v7.widget.CardView>
 
-</de.baumann.browser.View.NinjaRelativeLayout>
+</io.ascrod.monochrome.View.NinjaRelativeLayout>
