@@ -116,6 +116,8 @@ public class NinjaWebViewClient extends WebViewClient {
         } else {
             ninjaWebView.postInvalidate();
         }
+
+        ninjaWebView.loadSource();
     }
 
     @SuppressWarnings("deprecation")

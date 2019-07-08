@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
 import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -97,6 +98,11 @@ public class NinjaWebView extends WebView implements AlbumController {
     private String userAgentOriginal;
     private String userAgentDesktop;
 
+    private String source;
+    public String Source() {
+        return source;
+    }
+
     private BrowserController browserController = null;
     public BrowserController getBrowserController() {
         return browserController;
@@ -114,6 +120,7 @@ public class NinjaWebView extends WebView implements AlbumController {
         this.dimen108dp = getResources().getDimensionPixelSize(R.dimen.layout_height_108dp);
         this.animTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
         this.foreground = false;
+        this.source = null;
 
         this.adBlock = new AdBlock(this.context);
         this.javaHosts = new Javascript(this.context);
@@ -402,6 +409,18 @@ public class NinjaWebView extends WebView implements AlbumController {
 
     public boolean isLoadFinish() {
         return getProgress() >= BrowserUnit.PROGRESS_MAX;
+    }
+
+    public void loadSource() {
+        evaluateJavascript(
+            "(function() { return ('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+            new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String html) {
+                    source = html;
+                }
+            }
+        );
     }
 
     public void onLongPress() {
