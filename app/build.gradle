@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "io.ascrod.monochrome"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 81
         versionName "5.9"
         multiDexEnabled true
