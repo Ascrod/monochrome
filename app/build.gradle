@@ -8,6 +8,7 @@ def versionPatch = 0
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
+    project.archivesBaseName = 'monochrome';
 
     defaultConfig {
         applicationId "io.ascrod.monochrome"
@@ -23,6 +24,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${archivesBaseName}-${defaultConfig.versionName}-${variant.buildType.name}.apk"
+                }
+            }
         }
     }
     lintOptions {
