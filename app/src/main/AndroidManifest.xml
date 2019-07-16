@@ -20,6 +20,7 @@
         android:allowBackup="true"
         android:enabled="true"
         android:largeHeap="true"
+        android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_descriptor">
 
         <!-- Holder -->
