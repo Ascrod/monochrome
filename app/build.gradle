@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+
+
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -8,8 +13,8 @@ android {
         applicationId "io.ascrod.monochrome"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 81
-        versionName "5.9"
+        versionCode 1
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
